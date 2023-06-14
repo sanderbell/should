@@ -2,13 +2,23 @@ import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  let oldVisitor = JSON.parse(localStorage.getItem('Old visitor'))
-    ? true
-    : false;
+  const [flyAwayIndex, setFlyAwayIndex] = useState(-1);
 
-  localStorage.setItem('Old visitor', true);
+  const handleFlyAway = () => {
+    setFlyAwayIndex(currentScreen);
+    setTimeout(() => {
+      setCurrentScreen(currentScreen + 1);
+      setFlyAwayIndex(-1);
+      console.log('currentScreen' + currentScreen);
+      console.log('flyAwayIndex' + flyAwayIndex);
+    }, 500);
+  };
+  const [oldVisitor, setOldVisitor] = useState(false);
 
-  console.log('OldVisitor is', oldVisitor);
+  useEffect(() => {
+    const isOldVisitor = JSON.parse(localStorage.getItem('Old visitor'));
+    setOldVisitor(isOldVisitor ? true : false);
+  }, []);
 
   const [modalVisible, setModalVisible] = useState(false);
   const openModal = () => {
@@ -17,6 +27,8 @@ function App() {
 
   const closeModal = () => {
     setModalVisible(false);
+    setOldVisitor(true);
+    localStorage.setItem('Old visitor', JSON.stringify(true));
   };
 
   const screens = [
@@ -25,26 +37,26 @@ function App() {
       id: 'one',
     },
     {
-      heading: `Then, it'd be nice to:`,
+      heading: `It'd also be nice to:`,
       id: 'two',
     },
     {
-      heading: `Finally, I could:`,
+      heading: `Finally, I might:`,
       id: 'three',
     },
 
     {
-      heading: `Finally, I could:`,
+      heading: 'Today, I should:',
       id: 'four',
     },
 
     {
-      heading: `Finally, I could:`,
+      heading: `Today, it'd be nice to:`,
       id: 'five',
     },
 
     {
-      heading: `Finally, I could:`,
+      heading: `Today, I might:`,
       id: 'six',
     },
 
@@ -54,13 +66,15 @@ function App() {
     },
   ];
 
-  const [currentInitialScreen, setCurrentInitialScreen] = useState(0);
+  const allTasksSet =
+    localStorage.getItem('Task one') &&
+    localStorage.getItem('Task two') &&
+    localStorage.getItem('Task three');
 
+  const [currentScreen, setCurrentScreen] = useState(allTasksSet ? 3 : 0);
   const [task, setTask] = useState('');
 
-  const storageTask = localStorage.getItem(
-    `Task ${screens[currentInitialScreen].id}`
-  );
+  const storageTask = localStorage.getItem(`Task ${screens[currentScreen].id}`);
 
   useEffect(() => {
     if (storageTask) {
@@ -71,15 +85,25 @@ function App() {
   }, [storageTask]);
 
   const handleTaskInputChange = (e) => {
-    console.log('handleTaskInputChange - e.target.value:', e.target.value);
     setTask(e.target.value);
   };
 
   const placeholder = [
     'Run 10 miles',
+    'Unfreeze fridge',
+    'Meditate',
     'Buy some durian',
-    'Go to the gym',
+    'Plan next week',
+    'Go to gym',
+    'Apply for refund',
+    'Book hotel',
+    'Decide on trip',
+    'Order groceries',
     'Read 50 pages',
+    'Wash clothes',
+    'Arrange my vacay',
+    'Pay bills',
+    'Water my ficus',
     'Call my brother',
   ];
 
@@ -89,22 +113,13 @@ function App() {
   };
 
   const handleSaveTask = () => {
-    console.log('handleSaveTask - task:', task);
     if (task.length > 0) {
-      localStorage.setItem(
-        `Task ${screens[currentInitialScreen].id}`,
-        task.trim()
-      );
+      localStorage.setItem(`Task ${screens[currentScreen].id}`, task.trim());
       setTask(task.trim());
     } else {
-      localStorage.removeItem(`Task ${screens[currentInitialScreen].id}`);
-      console.log('handleSaveTask - task:', task);
+      localStorage.removeItem(`Task ${screens[currentScreen].id}`);
     }
   };
-
-  console.log('Rendering App - currentInitialScreen:', currentInitialScreen);
-
-  localStorage.setItem('Old visitor', true);
 
   return (
     <div className='App'>
@@ -118,9 +133,9 @@ function App() {
             <br />
             sworksworkswoorksworksw
             <br />
-            sworksworkswosworksworksworksworksw
+            sworksworksworksworksw
             <br />
-            sworksworksworksworkswsworksw
+            sworksworksworkswworksw
             <br />
             sworks workswoorksworksw
             <br />
@@ -129,50 +144,148 @@ function App() {
           <button onClick={closeModal}>✖️</button>
         </div>
       )}
-      <div
-        className={modalVisible ? 'initial-content blurred' : 'initial-content'}
-      >
-        <h1> {screens[currentInitialScreen].heading} </h1>
-        <input
-          className='initial-input'
-          type='text'
-          autoComplete='off'
-          maxLength='17'
-          spellCheck='false'
-          placeholder={getRandomPlaceholder()}
-          value={task}
-          onBlur={handleSaveTask}
-          onChange={handleTaskInputChange}
-          id={`start-input-${screens[currentInitialScreen].id}`}
-        />
-        <div id='buttons-container'>
-          {currentInitialScreen > 0 ? (
-            <button
-              onClick={() => setCurrentInitialScreen(currentInitialScreen - 1)}
-              disabled={currentInitialScreen === 0}
-            >
-              ←
-            </button>
-          ) : (
-            <button onClick={openModal}>ℹ</button>
-          )}
-          {currentInitialScreen < 2 ? (
-            <button
-              onClick={() => setCurrentInitialScreen(currentInitialScreen + 1)}
-              disabled={task.length === 0}
-            >
-              →
-            </button>
-          ) : (
-            <button
-              onClick={() => setCurrentInitialScreen(currentInitialScreen + 1)}
-            >
-              🙃
-            </button>
-          )}
+
+      {currentScreen < 3 ? (
+        <div
+          className={
+            modalVisible ? 'initial-content blurred' : 'initial-content'
+          }
+        >
+          <h1> {screens[currentScreen].heading} </h1>
+
+          <input
+            autoFocus
+            className='initial-input'
+            type='text'
+            autoComplete='off'
+            maxLength='18'
+            spellCheck='false'
+            placeholder={getRandomPlaceholder()}
+            value={task}
+            onBlur={handleSaveTask}
+            onChange={handleTaskInputChange}
+            id={`initial-input-${screens[currentScreen].id}`}
+          />
+
+          <div id='buttons-container'>
+            {currentScreen > 0 ? (
+              <button
+                onClick={() => setCurrentScreen(currentScreen - 1)}
+                disabled={currentScreen === 0}
+              >
+                ←
+              </button>
+            ) : (
+              <button onClick={openModal}>ℹ</button>
+            )}
+            {currentScreen < 2 ? (
+              <button
+                onClick={() => setCurrentScreen(currentScreen + 1)}
+                disabled={task.length === 0}
+              >
+                →
+              </button>
+            ) : (
+              <button onClick={() => setCurrentScreen(currentScreen + 1)}>
+                🎊
+              </button>
+            )}
+          </div>
         </div>
-      </div>
-      <div className='final-content'>dfsdfdsf</div>
+      ) : (
+        <div id='final-content'>
+          <h1> {screens[currentScreen].heading} </h1>
+          <div id='final-screens-container'>
+            <div
+              className={`final-screens final-screen-${
+                screens[currentScreen].id
+              } ${flyAwayIndex === currentScreen ? 'fly-away' : ''}`}
+              style={{
+                animation:
+                  flyAwayIndex === currentScreen
+                    ? 'flyAwayAnimation 1.5s ease 1'
+                    : currentScreen === 3
+                    ? 'movein-four 2s cubic-bezier(0.84, -0.26, 0.16, 1) 1'
+                    : 'none',
+              }}
+            >
+              <p className='final-screen-task'>
+                {localStorage.getItem(`Task ${screens[currentScreen - 3].id}`)}
+              </p>
+            </div>
+
+            {currentScreen + 1 < screens.length && (
+              <div
+                className={`final-screens final-screen-${
+                  screens[currentScreen + 1].id
+                }`}
+                style={{
+                  animation:
+                    flyAwayIndex === currentScreen + 1
+                      ? 'flyAwayAnimation 1.5s ease 1'
+                      : currentScreen === 3
+                      ? 'movein-five 1.9s cubic-bezier(0.84, -0.26, 0.16, 1) 1'
+                      : 'none', // FIXME:
+                }}
+              >
+                <p className='final-screen-task'>
+                  {localStorage.getItem(
+                    `Task ${screens[currentScreen - 2].id}`
+                  )}
+                </p>
+              </div>
+            )}
+
+            {currentScreen + 2 < screens.length && (
+              <div
+                className={`final-screens final-screen-${
+                  screens[currentScreen + 2].id
+                }`}
+                style={{
+                  animation:
+                    flyAwayIndex === currentScreen + 2
+                      ? 'flyAwayAnimation 1.5s ease 1'
+                      : currentScreen === 3
+                      ? 'movein-six 2.4s cubic-bezier(0.84, -0.26, 0.16, 1) 1'
+                      : 'none',
+                }}
+              >
+                <p className='final-screen-task'>
+                  {localStorage.getItem(
+                    `Task ${screens[currentScreen - 1].id}`
+                  )}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div id='buttons-container'>
+            {3 > currentScreen > 0 ? (
+              <button
+                onClick={() => setCurrentScreen(currentScreen - 1)}
+                disabled={currentScreen === 0}
+              >
+                ←
+              </button>
+            ) : (
+              <button onClick={openModal}>ℹ</button>
+            )}
+            {currentScreen < 2 ? (
+              <button
+                onClick={() => setCurrentScreen(currentScreen + 1)}
+                disabled={task.length === 0}
+              >
+                →
+              </button>
+            ) : (
+              <button onClick={() => handleFlyAway()}>✅</button>
+            )}
+          </div>
+          <button id='edit-button' onClick={() => setCurrentScreen(0)}>
+            EDIT TASKS
+          </button>
+        </div>
+      )}
     </div>
   );
 }
