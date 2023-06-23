@@ -1,5 +1,6 @@
 function Initial({
   modalVisible,
+  burntModalVisible,
   screens,
   currentScreen,
   oldVisitor,
@@ -18,7 +19,11 @@ function Initial({
 }) {
   return (
     <div
-      className={modalVisible ? 'initial-content blurred' : 'initial-content'}
+      className={
+        modalVisible || burntModalVisible
+          ? 'initial-content blurred'
+          : 'initial-content'
+      }
     >
       <h1> {screens[currentScreen].heading} </h1>
 
@@ -43,18 +48,18 @@ function Initial({
             onClick={() => setCurrentScreen(currentScreen - 1)}
             disabled={currentScreen === 0 || !prevStorageTask}
           >
-            ←
-          </button>
+            ⬅️
+          </button> //FIXME: Arrow left
         ) : (
-          <button onClick={openModal}>ℹ</button>
+          <button onClick={openModal}>ℹ️</button> //FIXME: Info
         )}
         {currentScreen < 2 ? (
           <button
             onClick={() => setCurrentScreen(currentScreen + 1)}
             disabled={task.length === 0}
           >
-            →
-          </button>
+            ➡️
+          </button> //FIXME: Arrow right
         ) : (
           <button
             onClick={() =>
@@ -69,7 +74,7 @@ function Initial({
             disabled={task.length === 0}
           >
             🫡
-          </button>
+          </button> //FIXME: Todo
         )}
       </div>
     </div>

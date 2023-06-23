@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import Modal from './Modal';
+import BurntModal from './BurntModal';
 import Initial from './Initial';
 import Final from './Final';
 
@@ -35,7 +36,7 @@ function App() {
     },
 
     {
-      heading: `Yay! All done for today! Come tomorrow!`,
+      heading: `Yay! Done! Come tomorrow!`,
       id: 'seven',
     },
   ];
@@ -79,6 +80,7 @@ function App() {
   const [isGreen, setIsGreen] = useState(false);
   const [oldVisitor, setOldVisitor] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [burntModalVisible, setBurntModalVisible] = useState(true);
 
   const storageTask = localStorage.getItem(`Task ${screens[currentScreen].id}`);
 
@@ -95,6 +97,11 @@ function App() {
     setModalVisible(false);
     setOldVisitor(true);
     localStorage.setItem('Old visitor', JSON.stringify(true));
+  };
+
+  const closeBurntModal = () => {
+    localStorage.setItem('Burnt', JSON.stringify(true));
+    setBurntModalVisible(false);
   };
 
   const prevStorageTask =
@@ -165,10 +172,41 @@ function App() {
     }
   };
 
+  const handleClearAll = () =>
+    ['Task one', 'Task two', 'Task three'].forEach((key) => {
+      localStorage.removeItem(key);
+      setTimeout(() => {
+        setCurrentScreen(0);
+      }, 500);
+    });
+
   const getRandomPlaceholder = () => {
     const randomIndex = Math.floor(Math.random() * placeholder.length);
     return placeholder[randomIndex];
   };
+
+  const isBurnt = JSON.parse(localStorage.getItem('Burnt'));
+
+  const burnTasksAtMidnight = () => {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    if (hours === 0 && minutes === 0 && seconds === 0) {
+      localStorage.setItem('Burnt', JSON.stringify(false));
+      for (let i = 0; i < screens.length; i++) {
+        localStorage.removeItem(`Task ${screens[i].id}`);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(burnTasksAtMidnight, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  });
 
   return (
     <div
@@ -186,6 +224,10 @@ function App() {
     >
       {(modalVisible || oldVisitor === false) && (
         <Modal closeModal={closeModal} />
+      )}
+
+      {burntModalVisible && !isBurnt && (
+        <BurntModal closeBurntModal={closeBurntModal} />
       )}
 
       {currentScreen < 3 ? (
@@ -209,6 +251,7 @@ function App() {
         />
       ) : (
         <Final
+          handleClearAll={handleClearAll}
           screens={screens}
           currentScreen={currentScreen}
           flyAwayIndex={flyAwayIndex}

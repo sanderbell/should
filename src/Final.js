@@ -6,6 +6,7 @@ function Final({
   setCurrentScreen,
   openModal,
   task,
+  handleClearAll,
 }) {
   return (
     <div id='final-content'>
@@ -76,29 +77,47 @@ function Final({
             onClick={() => setCurrentScreen(currentScreen - 1)}
             disabled={currentScreen === 0}
           >
-            ←
+            ⬅️ //TODO: ARROW LEFT
           </button>
-        ) : (
-          <button onClick={openModal}>ℹ</button>
-        )}
+        ) : currentScreen < 3 ? (
+          <button onClick={openModal}>ℹ️</button>
+        ) : currentScreen < 6 ? (
+          <button onClick={() => setCurrentScreen(currentScreen - 3)}>
+            ✂️
+          </button>
+        ) : null}
         {currentScreen < 2 ? (
           <button
             onClick={() => setCurrentScreen(currentScreen + 1)}
             disabled={task.length === 0}
           >
-            →
+            ➡️ //TODO: ARROW RIGHT
           </button>
         ) : (
-          <button onClick={() => handleFlyAway()}>✅</button>
+          <button
+            style={
+              currentScreen === 6
+                ? {
+                    transform: 'translateY(-100%) rotate(360deg) scale(3.5)',
+                    transition:
+                      'transform 2.5s cubic-bezier(0.9, -0.2, 0.2, 1)',
+                  }
+                : null
+            }
+            onClick={currentScreen !== 6 ? () => handleFlyAway() : null}
+          >
+            ✅
+          </button>
         )}
       </div>
-      {currentScreen < screens.length - 1 && (
-        <button
-          id='edit-button'
-          onClick={() => setCurrentScreen(currentScreen - 3)}
-        >
-          ✂️ EDIT TASKS
+      {currentScreen < 6 ? (
+        <button id='edit-button' onClick={handleClearAll}>
+          CLEAR ALL
         </button>
+      ) : (
+        <button id='edit-button' onClick={() => setCurrentScreen(0)}>
+          START ALL OVER
+        </button> //FIXME: Add all done var so user sees only this screen
       )}
     </div>
   );

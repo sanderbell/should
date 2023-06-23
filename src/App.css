@@ -2,6 +2,8 @@
 
 html {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -14,6 +16,8 @@ body {
 *::after {
   /* border: 0.1px dotted rgb(35, 35, 35); */
   box-sizing: inherit;
+  margin: 0;
+  padding: 0;
 }
 
 .App {
@@ -31,8 +35,8 @@ body {
   height: 100vh;
   justify-content: space-evenly;
   text-align: center;
-  transition: all 0.8s;
-  width: 80%;
+  transition: all 0.5s;
+  width: 90%;
 }
 
 .initial-content.blurred {
@@ -41,11 +45,9 @@ body {
 }
 
 h1 {
-  font-size: 3rem;
-  margin: 0;
+  font-size: 3.6rem;
   max-height: 3em;
-  max-width: 85%;
-  line-height: 1.2em;
+  line-height: 1.1em;
 
 }
 
@@ -56,20 +58,20 @@ h1 {
   color: #6b6b6b;
   box-shadow: 0.6em 0.6em 1.5vh #c5c2c28a;
   border-radius: 1em;
-  font-size: 4.5vmin;
+  font-size: 4.7vmin;
   font-weight: 800;
-  max-width: 95%;
+  /* max-width: 95%; */
   outline: none;
-  padding: 1.4em;
+  padding: 1.5em;
   text-align: center;
   text-transform: uppercase;
-  transition: all 0.8s ease;
+  transition: all 0.5s ease;
 }
 
 .initial-input:focus {
   box-shadow: 1em 1em 2.5vh #8f8c8c8a;
   outline: none;
-  transform: scale(1.16);
+  transform: scale(1.17);
 }
 
 .initial-input::placeholder {
@@ -102,17 +104,19 @@ h1 {
 }
 
 #buttons-container {
+  transform: translateY(30px);
+  opacity: 0.7;
   align-items: center;
   display: flex;
   justify-content: center;
-  max-height: 2em;
+  /* max-height: 3em; */
 }
 
 button {
+  font-family: 'Secular One', sans-serif;
   background: none;
   border: none;
-  color: rgb(87, 87, 87);
-  font-size: calc(3rem + 2vmin);
+  font-size: calc(3rem + 1vmin);
   padding: 0.4em;
   transition: all 0.5s ease;
 }
@@ -128,10 +132,23 @@ button:disabled:hover {
 
 button:hover {
   border: none;
-  border-radius: 0.4em;
   cursor: pointer;
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
+
+#edit-button {
+  /* transform: translateY(-15px); */
+  font-size: 0.6rem;
+  opacity: 0.3;
+}
+
+#edit-button:focus,
+#edit-button:hover {
+  cursor: pointer;
+  opacity: 0.9;
+  transform: scale(1.15);
+}
+
 
 .modal {
   align-items: center;
@@ -149,6 +166,7 @@ button:hover {
 }
 
 .modal-heading {
+
   font-size: calc(30px + 5vmin);
   margin-bottom: 16px;
   max-width: 85%;
@@ -167,8 +185,8 @@ button:hover {
   height: 100vh;
   justify-content: space-evenly;
   text-align: center;
-  transition: all 0.8s;
-  width: 80%;
+  transition: all 0.5s;
+  width: 90%;
 }
 
 #final-screens-container {
@@ -194,7 +212,7 @@ button:hover {
   justify-content: center;
   position: absolute;
   width: 100%;
-  max-width: 450px;
+  max-width: 460px;
 }
 
 .final-screen-four {
@@ -227,10 +245,7 @@ button:hover {
   text-transform: uppercase;
 }
 
-#edit-button {
-  transform: translateY(-120%);
-  font-size: 0.7rem;
-}
+
 
 .fly-away {
   animation: flyAwayAnimation 2s ease 1;
@@ -287,14 +302,36 @@ button:hover {
   }
 }
 
+@keyframes done-to-center {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-200%);
+  }
+}
+
 @media screen and (orientation: landscape) {
   h1 {
-    font-size: 12vmin;
-    margin: 0;
+    font-size: 10vmin;
+    margin-bottom: 0.6em;
     max-height: 3em;
-    max-width: 80%;
-    line-height: 1.2em;
+    max-width: 90%;
+    /* line-height: 1.5em; */
 
+  }
+
+  .initial-input {
+    font-size: 7vmin;
+    padding: 1.1em;
+
+
+  }
+
+  .final-screen-task {
+    font-size: 6vmin;
+    padding: 1em;
   }
 
 }
