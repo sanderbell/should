@@ -1,12 +1,22 @@
+import Footer from './Footer';
+
 function Final({
   screens,
+  canUndo,
+  undone,
+  setUndone,
+  canFlyAway,
+  doneForToday,
+  handleUndo,
   currentScreen,
+  progressWidth,
   flyAwayIndex,
   handleFlyAway,
   setCurrentScreen,
   openModal,
   task,
   handleClearAll,
+  noButtonScale,
 }) {
   return (
     <div id='final-content'>
@@ -70,7 +80,6 @@ function Final({
           </div>
         )}
       </div>
-
       <div id='buttons-container'>
         {3 > currentScreen > 0 ? (
           <button
@@ -83,7 +92,7 @@ function Final({
           <button onClick={openModal}>ℹ️</button>
         ) : currentScreen < 6 ? (
           <button onClick={() => setCurrentScreen(currentScreen - 3)}>
-            ✂️
+            ✏️
           </button>
         ) : null}
         {currentScreen < 2 ? (
@@ -95,12 +104,16 @@ function Final({
           </button>
         ) : (
           <button
+            disabled={
+              canFlyAway === false && currentScreen !== 3 && currentScreen !== 6
+            }
+            className={noButtonScale ? 'no-hover' : null}
             style={
               currentScreen === 6
                 ? {
-                    transform: 'translateY(-100%) rotate(360deg) scale(3.5)',
+                    transform: 'translateY(-160%) scale(4) rotate(360deg)', //FIXME: delete scale from button:hover
                     transition:
-                      'transform 2.5s cubic-bezier(0.9, -0.2, 0.2, 1)',
+                      'transform 2s cubic-bezier(0.84, -0.5, 0.16, 1)',
                   }
                 : null
             }
@@ -111,14 +124,27 @@ function Final({
         )}
       </div>
       {currentScreen < 6 ? (
-        <button id='edit-button' onClick={handleClearAll}>
+        <button id='bottom-button' onClick={handleClearAll}>
           CLEAR ALL
         </button>
       ) : (
-        <button id='edit-button' onClick={() => setCurrentScreen(0)}>
+        <button
+          id='bottom-button'
+          onClick={() => {
+            localStorage.removeItem('Done for today');
+            setCurrentScreen(0);
+          }}
+        >
           START ALL OVER
         </button> //FIXME: Add all done var so user sees only this screen
       )}
+      {canUndo ? (
+        <button onClick={handleUndo} id='can-undo'>
+          UNDO
+          <div id='progress-bar' style={{ width: `${progressWidth}%` }}></div>
+        </button>
+      ) : null}
+      {doneForToday && <Footer />}
     </div>
   );
 }

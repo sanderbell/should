@@ -1,13 +1,20 @@
+import Footer from './Footer';
+
 function BurntModal({ closeBurntModal }) {
   return (
     <div className='modal'>
-      <h2 className='modal-heading'>They're gone!</h2>
-      <p className='modal-text'>
-        At the stroke of midnight, we unleashed the fiery inferno upon your
-        to-dos! Behold, a new day dawns with fresh challenges! Let's conquer
-        them with fervor!
-      </p>
-      <button onClick={closeBurntModal}>🧯</button>
+      <div className='modal-content-wrapper'>
+        <h2 className='modal-heading'>They're gone...</h2>
+        <p className='modal-text'>
+          At the stroke of midnight, the fiery inferno was unleashed upon your
+          to-dos! Behold, a new day dawns with fresh challenges! Let's conquer
+          them with fervor!
+        </p>
+        <button className='ready-btn' onClick={closeBurntModal}>
+          🧯
+        </button>
+      </div>
+      <Footer />
     </div>
   );
 }

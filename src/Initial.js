@@ -1,15 +1,18 @@
 function Initial({
+  contentBlurred,
   modalVisible,
   burntModalVisible,
   screens,
   currentScreen,
   oldVisitor,
+  inputRef,
   isGreen,
   getRandomPlaceholder,
   task,
   handleKeyDown,
   handleSaveTask,
   handleTaskInputChange,
+  handleBlurContent,
   firstInStorage,
   secondInStorage,
   thirdInStorage,
@@ -24,34 +27,50 @@ function Initial({
           ? 'initial-content blurred'
           : 'initial-content'
       }
+      // style={{ backgroundImage: 'url(/src/static/two.png)' }}
     >
-      <h1> {screens[currentScreen].heading} </h1>
-
+      <h1
+        style={
+          contentBlurred
+            ? { opacity: 0.5, filter: 'blur(8px)', transition: 'all 0.5s' }
+            : null
+        }
+      >
+        {screens[currentScreen].heading}
+      </h1>
       <input
+        ref={inputRef}
         className={`initial-input ${isGreen ? 'initial-input-saved' : ''}`}
         id={`initial-input-${screens[currentScreen].id}`}
         type='text'
-        autoFocus={oldVisitor ? true : false}
+        autoFocus={contentBlurred}
         autoComplete='off'
         maxLength='20'
         spellCheck='false'
         placeholder={getRandomPlaceholder()}
-        value={task}
+        value={isGreen ? 'Saved!' : task}
+        onFocus={handleBlurContent}
         onBlur={handleSaveTask}
         onChange={handleTaskInputChange}
         onKeyDown={handleKeyDown}
       />
-
-      <div id='buttons-container'>
+      <div
+        id='buttons-container'
+        style={
+          contentBlurred
+            ? { opacity: 0.2, filter: 'blur(12px)', transition: 'all 0.5s' }
+            : null
+        }
+      >
         {currentScreen > 0 ? (
           <button
             onClick={() => setCurrentScreen(currentScreen - 1)}
             disabled={currentScreen === 0 || !prevStorageTask}
           >
             ⬅️
-          </button> //FIXME: Arrow left
+          </button>
         ) : (
-          <button onClick={openModal}>ℹ️</button> //FIXME: Info
+          <button onClick={openModal}>ℹ️</button>
         )}
         {currentScreen < 2 ? (
           <button
@@ -59,7 +78,7 @@ function Initial({
             disabled={task.length === 0}
           >
             ➡️
-          </button> //FIXME: Arrow right
+          </button>
         ) : (
           <button
             onClick={() =>
@@ -74,7 +93,7 @@ function Initial({
             disabled={task.length === 0}
           >
             🫡
-          </button> //FIXME: Todo
+          </button>
         )}
       </div>
     </div>

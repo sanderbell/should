@@ -1,15 +1,33 @@
+import Footer from './Footer';
+
 function Modal({ closeModal }) {
   return (
     <div className='modal'>
-      <h2 className='modal-heading'>Welcome to should:</h2>
-      <p className='modal-text'>
-        Set three daily tasks: the most important, a nice-to-do, and the least
-        important. At midnight, they'll burn, making room for the new day. Keep
-        it concise: under 20 characters each. Because less is more.
-        <br /><br />
-        Ready?
-      </p>
-      <button onClick={closeModal}>🤝</button>
+      <div className='modal-content-wrapper'>
+        <h2 className='modal-heading'>Welcome to should:</h2>
+        <p className='modal-text'>
+          Here at our whimsical realm, we don't bite off more than we can chew.
+          Instead, we embrace the magic of three daily tasks:{' '}
+          <span className='modal-span' id='modal-span-one'>
+            1
+          </span>{' '}
+          the most important,{' '}
+          <span className='modal-span' id='modal-span-two'>
+            2
+          </span>{' '}
+          a nice-to-do, and{' '}
+          <span className='modal-span' id='modal-span-three'>
+            3
+          </span>{' '}
+          the least important. As the clock strikes midnight, those to-dos
+          vanish in a puff of smoke, making way for a fresh day. Hey, let's keep
+          it snappy: up to 20 characters each. Are you in?
+        </p>
+        <button className='ready-btn' onClick={closeModal}>
+          🤝
+        </button>
+      </div>
+      <Footer />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Modal from './Modal';
 import BurntModal from './BurntModal';
@@ -6,6 +6,20 @@ import Initial from './Initial';
 import Final from './Final';
 
 function App() {
+  useEffect(() => {
+    const preventScroll = (event) => {
+      event.preventDefault();
+    };
+
+    document.body.addEventListener('touchmove', preventScroll, {
+      passive: false,
+    });
+
+    return () => {
+      document.body.removeEventListener('touchmove', preventScroll);
+    };
+  }, []);
+
   const screens = [
     {
       heading: 'Today, I should:',
@@ -26,37 +40,38 @@ function App() {
     },
 
     {
-      heading: `Today, it'd be nice to:`,
+      heading: `It'd also be nice to:`,
       id: 'five',
     },
 
     {
-      heading: `Today, I might:`,
+      heading: `Finally, I might:`,
       id: 'six',
     },
 
     {
-      heading: `Yay! Done! Come tomorrow!`,
+      heading: `Yay! All done for today`,
       id: 'seven',
     },
   ];
   const placeholder = [
     'Run 10 miles',
-    'Unfreeze fridge',
+    'Unfreeze my fridge',
     'Meditate',
+    'Donate $100',
     'Buy some durian',
     'Plan next week',
-    'Go to gym',
-    'Apply for refund',
-    'Book hotel',
-    'Decide on trip',
+    'Go to the gym',
+    'Apply for the refund',
+    'Book a room',
+    'Decide on the trip',
     'Order groceries',
     'Read 50 pages',
     'Wash clothes',
     'Arrange my vacay',
     'Pay bills',
     'Water my ficus',
-    'Call my brother',
+    'Call my bro',
   ];
 
   const [firstInStorage, secondInStorage, thirdInStorage] = [
@@ -64,6 +79,18 @@ function App() {
     localStorage.getItem('Task two'),
     localStorage.getItem('Task three'),
   ];
+
+  const now = new Date();
+  const [day, month, year] = [
+    now.getDate(),
+    now.getMonth() + 1,
+    now.getFullYear(),
+  ];
+  const timeStamp = localStorage.getItem('Timestamp');
+  const [tsDay, tsMonth, tsYear] = timeStamp
+    ? timeStamp.split(',').map(Number)
+    : [0, 0, 0];
+
   const allInStorage = firstInStorage && secondInStorage && thirdInStorage;
 
   const [currentScreen, setCurrentScreen] = useState(
@@ -75,19 +102,46 @@ function App() {
       ? 5
       : 0
   );
+
   const [task, setTask] = useState('');
   const [flyAwayIndex, setFlyAwayIndex] = useState(-1);
   const [isGreen, setIsGreen] = useState(false);
   const [oldVisitor, setOldVisitor] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [burntModalVisible, setBurntModalVisible] = useState(true);
+  const [contentBlurred, setContentBlurred] = useState(false);
+  const [canUndo, setCanUndo] = useState(false);
+  const [progressWidth, setProgressWidth] = useState(100);
+  const [noButtonScale, setNoButtonScale] = useState(false);
+  const [abortedCountDown, setAbortedCountDown] = useState(true);
+  const [canFlyAway, setCanFlyAway] = useState(true);
 
+  const undoneRef = useRef(false);
   const storageTask = localStorage.getItem(`Task ${screens[currentScreen].id}`);
+  const doneForToday = localStorage.getItem(`Done for today`);
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    doneForToday && !allInStorage && setCurrentScreen(6);
+  }, [allInStorage, doneForToday]);
+
+  useEffect(() => {
+    if (contentBlurred) {
+      inputRef.current.focus();
+    }
+  }, [contentBlurred]);
 
   useEffect(() => {
     const isOldVisitor = JSON.parse(localStorage.getItem('Old visitor'));
     setOldVisitor(isOldVisitor ? true : false);
+    burnTasksAtMidnight();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const isOnFire = oldVisitor
+    ? JSON.parse(localStorage.getItem('Is it on fire?'))
+    : false;
 
   const openModal = () => {
     setModalVisible(true);
@@ -96,12 +150,15 @@ function App() {
   const closeModal = () => {
     setModalVisible(false);
     setOldVisitor(true);
+    localStorage.setItem(`Timestamp`, [day, month, year]);
     localStorage.setItem('Old visitor', JSON.stringify(true));
   };
 
   const closeBurntModal = () => {
-    localStorage.setItem('Burnt', JSON.stringify(true));
+    localStorage.setItem('Is it on fire?', JSON.stringify(false));
     setBurntModalVisible(false);
+    localStorage.setItem(`Timestamp`, [day, month, year]);
+    window.location.reload();
   };
 
   const prevStorageTask =
@@ -118,53 +175,56 @@ function App() {
   }, [storageTask]);
 
   const handleFlyAway = () => {
+    currentScreen === 5 && setNoButtonScale(true);
     setFlyAwayIndex(currentScreen);
+    setCanUndo(true);
+    setCanFlyAway(false);
+    undoneRef.current = false;
+    setAbortedCountDown(false);
+
     setTimeout(() => {
       setCurrentScreen(currentScreen + 1);
       setFlyAwayIndex(-1);
+    }, 500);
+
+    setTimeout(() => {
+      if (undoneRef.current) {
+        return;
+      }
+      setCanUndo(false);
 
       if (currentScreen === 3) {
         localStorage.removeItem(`Task one`);
+        console.log('Task one removed');
       } else if (currentScreen === 4) {
         localStorage.removeItem(`Task two`);
+        console.log('Task two removed');
       } else if (currentScreen === 5) {
         localStorage.removeItem(`Task three`);
-      } else if (currentScreen === 6) {
-        setCurrentScreen(0);
-        return;
+        console.log('Task three removed');
+        localStorage.setItem(`Done for today`, JSON.stringify(true));
       }
-
-      setFlyAwayIndex(-1);
-      setCurrentScreen(currentScreen + 1);
-    }, 500);
+      setCanFlyAway(true);
+    }, 5000);
   };
 
   const handleTaskInputChange = (e) => {
     setTask(e.target.value);
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleSaveTask();
-      if (task.length > 0) {
-        setIsGreen(true);
-        setTimeout(() => {
-          handleFlyAway();
-          setIsGreen(false);
-        }, 1000);
-      }
-    }
-  };
-
   const handleSaveTask = () => {
+    setContentBlurred(false);
     if (task.length > 0) {
       if (task !== localStorage.getItem(`Task ${screens[currentScreen].id}`)) {
         setIsGreen(true);
+        localStorage.setItem(`Task ${screens[currentScreen].id}`, task.trim());
+        setTask(task.trim());
         setTimeout(() => {
           setIsGreen(false);
         }, 800);
-        localStorage.setItem(`Task ${screens[currentScreen].id}`, task.trim());
-        setTask(task.trim());
+        setTimeout(() => {
+          setCurrentScreen(currentScreen + 1);
+        }, 800);
       }
     } else {
       localStorage.removeItem(`Task ${screens[currentScreen].id}`);
@@ -172,41 +232,81 @@ function App() {
     }
   };
 
-  const handleClearAll = () =>
+  const handleBlurContent = () => {
+    setContentBlurred(true);
+  };
+
+  const handleClearAll = () => {
     ['Task one', 'Task two', 'Task three'].forEach((key) => {
       localStorage.removeItem(key);
-      setTimeout(() => {
-        setCurrentScreen(0);
-      }, 500);
     });
+    localStorage.removeItem('Done for today');
+    setTimeout(() => {
+      setCurrentScreen(0);
+      window.location.reload();
+    }, 400);
+  };
+
+  const handleUndo = () => {
+    setAbortedCountDown(true);
+    setCanUndo(false);
+    undoneRef.current = true;
+    setCurrentScreen(currentScreen - 1);
+    setCanFlyAway(true);
+  };
+
+  useEffect(() => {
+    const startCountdown = () => {
+      let timeLeft = 5;
+      const interval = setInterval(() => {
+        timeLeft -= 0.1;
+        setProgressWidth((timeLeft / 5) * 100);
+        if (timeLeft <= 0 || abortedCountDown) {
+          clearInterval(interval);
+        }
+      }, 100);
+    };
+
+    if (canUndo) {
+      startCountdown();
+    }
+  }, [canUndo, abortedCountDown]);
 
   const getRandomPlaceholder = () => {
     const randomIndex = Math.floor(Math.random() * placeholder.length);
     return placeholder[randomIndex];
   };
 
-  const isBurnt = JSON.parse(localStorage.getItem('Burnt'));
-
   const burnTasksAtMidnight = () => {
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
-
-    if (hours === 0 && minutes === 0 && seconds === 0) {
-      localStorage.setItem('Burnt', JSON.stringify(false));
-      for (let i = 0; i < screens.length; i++) {
-        localStorage.removeItem(`Task ${screens[i].id}`);
-      }
+    if (day > tsDay || (day <= tsDay && (month > tsMonth || year > tsYear))) {
+      timeStamp && localStorage.setItem('Is it on fire?', JSON.stringify(true)); //TODO: Delete this line?
+      screens.forEach((screen) => localStorage.removeItem(`Task ${screen.id}`));
+      localStorage.removeItem(`Done for today`);
     }
   };
 
-  useEffect(() => {
-    const interval = setInterval(burnTasksAtMidnight, 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  });
+  console.log('currentScreen is', currentScreen);
+
+  const statusBarStyle = document.getElementById('status-bar-style');
+
+  if (statusBarStyle) {
+    statusBarStyle.setAttribute(
+      'content',
+      currentScreen === 0
+        ? '#ffe8ea'
+        : currentScreen === 1
+        ? '#fff5e8'
+        : currentScreen === 2
+        ? '#e8fffe'
+        : currentScreen === 3
+        ? '#f8f2f0'
+        : currentScreen === 4
+        ? '#f2f1e9'
+        : currentScreen === 5
+        ? '#d8f4f5'
+        : '#e7fce6'
+    );
+  }
 
   return (
     <div
@@ -214,51 +314,66 @@ function App() {
       style={{
         backgroundColor:
           currentScreen === 0
-            ? '#ffeded'
+            ? '#ffe8ea'
             : currentScreen === 1
-            ? '#e4fafe'
+            ? '#fff5e8'
             : currentScreen === 2
-            ? '#fbffe6'
-            : '#eceeec',
+            ? '#e8fffe'
+            : currentScreen === 3
+            ? '#f8f2f0'
+            : currentScreen === 4
+            ? '#f2f1e9'
+            : currentScreen === 5
+            ? '#d8f4f5'
+            : '#e7fce6',
       }}
     >
-      {(modalVisible || oldVisitor === false) && (
-        <Modal closeModal={closeModal} />
-      )}
+      {(modalVisible || oldVisitor === false) && <Modal {...{ closeModal }} />}
 
-      {burntModalVisible && !isBurnt && (
-        <BurntModal closeBurntModal={closeBurntModal} />
-      )}
+      {burntModalVisible && isOnFire && <BurntModal {...{ closeBurntModal }} />}
 
       {currentScreen < 3 ? (
         <Initial
-          modalVisible={modalVisible}
-          screens={screens}
-          currentScreen={currentScreen}
-          oldVisitor={oldVisitor}
-          isGreen={isGreen}
-          getRandomPlaceholder={getRandomPlaceholder}
-          task={task}
-          handleKeyDown={handleKeyDown}
-          handleSaveTask={handleSaveTask}
-          handleTaskInputChange={handleTaskInputChange}
-          firstInStorage={firstInStorage}
-          secondInStorage={secondInStorage}
-          thirdInStorage={thirdInStorage}
-          openModal={openModal}
-          setCurrentScreen={setCurrentScreen}
-          prevStorageTask={prevStorageTask}
+          {...{
+            inputRef,
+            modalVisible,
+            screens,
+            currentScreen,
+            oldVisitor,
+            isGreen,
+            contentBlurred,
+            getRandomPlaceholder,
+            task,
+            handleSaveTask,
+            handleTaskInputChange,
+            handleBlurContent,
+            firstInStorage,
+            secondInStorage,
+            thirdInStorage,
+            openModal,
+            setCurrentScreen,
+            prevStorageTask,
+          }}
         />
       ) : (
         <Final
-          handleClearAll={handleClearAll}
-          screens={screens}
-          currentScreen={currentScreen}
-          flyAwayIndex={flyAwayIndex}
-          handleFlyAway={handleFlyAway}
-          setCurrentScreen={setCurrentScreen}
-          openModal={openModal}
-          task={task}
+          {...{
+            canFlyAway,
+            doneForToday,
+            canUndo,
+            progressWidth,
+            undoneRef,
+            handleClearAll,
+            handleUndo,
+            screens,
+            currentScreen,
+            flyAwayIndex,
+            handleFlyAway,
+            setCurrentScreen,
+            openModal,
+            task,
+            noButtonScale,
+          }}
         />
       )}
     </div>
