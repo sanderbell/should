@@ -2,9 +2,7 @@ import Footer from './Footer';
 
 function Final({
   screens,
-  canUndo,
-  undone,
-  setUndone,
+  undoButtonShown,
   canFlyAway,
   doneForToday,
   handleUndo,
@@ -18,6 +16,7 @@ function Final({
   handleClearAll,
   noButtonScale,
 }) {
+
   return (
     <div id='final-content'>
       <h1> {screens[currentScreen].heading} </h1>
@@ -138,7 +137,7 @@ function Final({
           START ALL OVER
         </button> //FIXME: Add all done var so user sees only this screen
       )}
-      {canUndo ? (
+      {undoButtonShown === true ? (
         <button onClick={handleUndo} id='can-undo'>
           UNDO
           <div id='progress-bar' style={{ width: `${progressWidth}%` }}></div>

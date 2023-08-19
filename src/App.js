@@ -110,12 +110,12 @@ function App() {
   const [modalVisible, setModalVisible] = useState(false);
   const [burntModalVisible, setBurntModalVisible] = useState(true);
   const [contentBlurred, setContentBlurred] = useState(false);
-  const [canUndo, setCanUndo] = useState(false);
   const [progressWidth, setProgressWidth] = useState(100);
   const [noButtonScale, setNoButtonScale] = useState(false);
   const [canFlyAway, setCanFlyAway] = useState(true);
 
-  const undoneRef = useRef(false); // A var that carries the fact that user pressed undo button thru all rerenders
+  const canUndoRef = useRef(false); // A var that carries the fact that user pressed undo button thru all rerenders
+  const undoButtonShown = canUndoRef.current;
 
   const storageTask = localStorage.getItem(`Task ${screens[currentScreen].id}`);
   const doneForToday = localStorage.getItem(`Done for today`);
@@ -175,11 +175,12 @@ function App() {
   }, [storageTask]);
 
   const handleFlyAway = () => {
+    canUndoRef.current = true;
     currentScreen === 5 && setNoButtonScale(true);
     setFlyAwayIndex(currentScreen);
-    setCanUndo(true);
     setCanFlyAway(false);
-    undoneRef.current = false;
+
+    startCountdown();
 
     setTimeout(() => {
       setCurrentScreen(currentScreen + 1);
@@ -187,18 +188,20 @@ function App() {
     }, 500);
 
     setTimeout(() => {
-      setCanUndo(false);
+      if (canUndoRef.current) {
+        if (currentScreen === 3) {
+          localStorage.removeItem(`Task one`);
+          console.log('Task one removed');
+        } else if (currentScreen === 4) {
+          localStorage.removeItem(`Task two`);
+          console.log('Task two removed');
+        } else if (currentScreen === 5) {
+          localStorage.removeItem(`Task three`);
+          console.log('Task three removed');
+          localStorage.setItem(`Done for today`, JSON.stringify(true));
+        }
 
-      if (currentScreen === 3) {
-        localStorage.removeItem(`Task one`);
-        console.log('Task one removed');
-      } else if (currentScreen === 4) {
-        localStorage.removeItem(`Task two`);
-        console.log('Task two removed');
-      } else if (currentScreen === 5) {
-        localStorage.removeItem(`Task three`);
-        console.log('Task three removed');
-        localStorage.setItem(`Done for today`, JSON.stringify(true));
+        canUndoRef.current = false;
       }
       setCanFlyAway(true);
     }, 5000);
@@ -243,28 +246,21 @@ function App() {
   };
 
   const handleUndo = () => {
-    undoneRef.current = true;
-    setCanUndo(false);
     setCurrentScreen(currentScreen - 1);
     setCanFlyAway(true);
+    canUndoRef.current = false;
   };
 
-  useEffect(() => {
-    const startCountdown = () => {
-      let timeLeft = 5;
-      const interval = setInterval(() => {
-        timeLeft -= 0.1;
-        setProgressWidth((timeLeft / 5) * 100);
-        if (timeLeft <= 0 || undoneRef.current === false) {
-          clearInterval(interval);
-        }
-      }, 100);
-    };
-
-    if (canUndo) {
-      startCountdown();
-    }
-  }, [canUndo]);
+  const startCountdown = () => {
+    let timeLeft = 5;
+    const interval = setInterval(() => {
+      timeLeft -= 0.1;
+      setProgressWidth((timeLeft / 5) * 100);
+      if (timeLeft <= 0 || canUndoRef.current === false) {
+        clearInterval(interval);
+      }
+    }, 100);
+  };
 
   const getRandomPlaceholder = () => {
     const randomIndex = Math.floor(Math.random() * placeholder.length);
@@ -278,6 +274,7 @@ function App() {
       localStorage.removeItem(`Done for today`);
     }
   };
+
 
   console.log('currentScreen is', currentScreen);
 
@@ -354,11 +351,10 @@ function App() {
           {...{
             canFlyAway,
             doneForToday,
-            canUndo,
             progressWidth,
-            undoneRef,
             handleClearAll,
             handleUndo,
+            undoButtonShown,
             screens,
             currentScreen,
             flyAwayIndex,
