@@ -1,0 +1,18 @@
+If I ✅ the task and then undo and ✅ again everything is jumping and rerenders
+If I ✅ the task and then close the app, after reopen it's still present
+
+After undo immidiately push edit and rerendering still goes on 
+iPhone shadow, fonts
+After filling the field mobile behaviour
+Desktop, iPad styles
+PWA
+Sync blur unblur
+1, 2, 3 are too pale
+✅ isn't rotating
+Characters limit
+Animation between all screens
+Animation with flying cards
+Emoji to svg
+Colors
+Footer
+Swiping

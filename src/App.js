@@ -113,10 +113,10 @@ function App() {
   const [canUndo, setCanUndo] = useState(false);
   const [progressWidth, setProgressWidth] = useState(100);
   const [noButtonScale, setNoButtonScale] = useState(false);
-  const [abortedCountDown, setAbortedCountDown] = useState(true);
   const [canFlyAway, setCanFlyAway] = useState(true);
 
-  const undoneRef = useRef(false);
+  const undoneRef = useRef(false); // A var that carries the fact that user pressed undo button thru all rerenders
+
   const storageTask = localStorage.getItem(`Task ${screens[currentScreen].id}`);
   const doneForToday = localStorage.getItem(`Done for today`);
 
@@ -180,7 +180,6 @@ function App() {
     setCanUndo(true);
     setCanFlyAway(false);
     undoneRef.current = false;
-    setAbortedCountDown(false);
 
     setTimeout(() => {
       setCurrentScreen(currentScreen + 1);
@@ -188,9 +187,6 @@ function App() {
     }, 500);
 
     setTimeout(() => {
-      if (undoneRef.current) {
-        return;
-      }
       setCanUndo(false);
 
       if (currentScreen === 3) {
@@ -243,14 +239,12 @@ function App() {
     localStorage.removeItem('Done for today');
     setTimeout(() => {
       setCurrentScreen(0);
-      window.location.reload();
     }, 400);
   };
 
   const handleUndo = () => {
-    setAbortedCountDown(true);
-    setCanUndo(false);
     undoneRef.current = true;
+    setCanUndo(false);
     setCurrentScreen(currentScreen - 1);
     setCanFlyAway(true);
   };
@@ -261,7 +255,7 @@ function App() {
       const interval = setInterval(() => {
         timeLeft -= 0.1;
         setProgressWidth((timeLeft / 5) * 100);
-        if (timeLeft <= 0 || abortedCountDown) {
+        if (timeLeft <= 0 || undoneRef.current === false) {
           clearInterval(interval);
         }
       }, 100);
@@ -270,7 +264,7 @@ function App() {
     if (canUndo) {
       startCountdown();
     }
-  }, [canUndo, abortedCountDown]);
+  }, [canUndo]);
 
   const getRandomPlaceholder = () => {
     const randomIndex = Math.floor(Math.random() * placeholder.length);
