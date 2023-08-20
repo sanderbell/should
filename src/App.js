@@ -187,22 +187,28 @@ function App() {
       setFlyAwayIndex(-1);
     }, 500);
 
-    setTimeout(() => {
-      if (canUndoRef.current) {
-        if (currentScreen === 3) {
-          localStorage.removeItem(`Task one`);
-          console.log('Task one removed');
-        } else if (currentScreen === 4) {
-          localStorage.removeItem(`Task two`);
-          console.log('Task two removed');
-        } else if (currentScreen === 5) {
-          localStorage.removeItem(`Task three`);
-          console.log('Task three removed');
-          localStorage.setItem(`Done for today`, JSON.stringify(true));
-        }
-
-        canUndoRef.current = false;
+    if (canUndoRef.current) {
+      if (currentScreen === 3) {
+        const taskOneData = localStorage.getItem('Task one');
+        localStorage.setItem('Mask one', taskOneData);
+        localStorage.removeItem('Task one');
+        console.log('Task one changed to Mask one');
+      } else if (currentScreen === 4) {
+        const taskTwoData = localStorage.getItem('Task two');
+        localStorage.setItem('Mask two', taskTwoData);
+        localStorage.removeItem('Task two');
+        console.log('Task two changed to Mask two');
+      } else if (currentScreen === 5) {
+        const taskThreeData = localStorage.getItem('Task three');
+        localStorage.setItem('Mask three', taskThreeData);
+        localStorage.removeItem('Task three');
+        console.log('Task three changed to Mask three');
+        localStorage.setItem('Done for today', JSON.stringify(true));
       }
+    }
+
+    setTimeout(() => {
+      canUndoRef.current = false;
       setCanFlyAway(true);
     }, 5000);
   };
@@ -240,7 +246,14 @@ function App() {
   };
 
   const handleClearAll = () => {
-    ['Task one', 'Task two', 'Task three'].forEach((key) => {
+    [
+      'Task one',
+      'Task two',
+      'Task three',
+      'Mask one',
+      'Mask two',
+      'Mask three',
+    ].forEach((key) => {
       localStorage.removeItem(key);
     });
     localStorage.removeItem('Done for today');
@@ -251,6 +264,25 @@ function App() {
   const handleUndo = () => {
     setCurrentScreen(currentScreen - 1);
     setCanFlyAway(true);
+
+    if (currentScreen === 4) {
+      const maskOneData = localStorage.getItem('Mask one');
+      localStorage.setItem('Task one', maskOneData);
+      localStorage.removeItem('Mask one');
+      console.log('Mask one changed to Task one');
+    } else if (currentScreen === 5) {
+      const maskTwoData = localStorage.getItem('Mask two');
+      localStorage.setItem('Task two', maskTwoData);
+      localStorage.removeItem('Mask two');
+      console.log('Mask two changed to Task two');
+    } else if (currentScreen === 6) {
+      const maskThreeData = localStorage.getItem('Mask three');
+      localStorage.setItem('Task three', maskThreeData);
+      localStorage.removeItem('Mask three');
+      console.log('Mask three changed to Task three');
+      localStorage.setItem('Done for today', JSON.stringify(true));
+    }
+
     canUndoRef.current = false;
   };
 

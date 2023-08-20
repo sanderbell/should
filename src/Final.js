@@ -16,7 +16,6 @@ function Final({
   handleClearAll,
   noButtonScale,
 }) {
-
   return (
     <div id='final-content'>
       <h1> {screens[currentScreen].heading} </h1>
@@ -135,7 +134,7 @@ function Final({
           }}
         >
           START ALL OVER
-        </button> //FIXME: Add all done var so user sees only this screen
+        </button>
       )}
       {undoButtonShown === true ? (
         <button onClick={handleUndo} id='can-undo'>

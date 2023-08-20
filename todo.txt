@@ -1,5 +1,3 @@
-If I ✅ the task and then close the app, after reopen it's still present
-
 Clear all confirmation
 iPhone shadow, fonts
 After filling the field mobile behaviour
