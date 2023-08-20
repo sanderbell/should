@@ -246,19 +246,25 @@ function App() {
   };
 
   const handleClearAll = () => {
-    [
-      'Task one',
-      'Task two',
-      'Task three',
-      'Mask one',
-      'Mask two',
-      'Mask three',
-    ].forEach((key) => {
-      localStorage.removeItem(key);
-    });
-    localStorage.removeItem('Done for today');
-    canUndoRef.current = false;
-    setCurrentScreen(0);
+    const userConfirmed = window.confirm(
+      'Are you sure you want to clear all tasks?'
+    );
+
+    if (userConfirmed) {
+      [
+        'Task one',
+        'Task two',
+        'Task three',
+        'Mask one',
+        'Mask two',
+        'Mask three',
+      ].forEach((key) => {
+        localStorage.removeItem(key);
+      });
+      localStorage.removeItem('Done for today');
+      canUndoRef.current = false;
+      setCurrentScreen(0);
+    }
   };
 
   const handleUndo = () => {
