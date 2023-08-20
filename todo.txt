@@ -1,7 +1,6 @@
 If I ✅ the task and then close the app, after reopen it's still present
 
 Clear all confirmation
-After undo immidiately push edit and rerendering still goes on 
 iPhone shadow, fonts
 After filling the field mobile behaviour
 Desktop, iPad styles

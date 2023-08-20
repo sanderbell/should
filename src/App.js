@@ -220,9 +220,13 @@ function App() {
         setTask(task.trim());
         setTimeout(() => {
           setIsGreen(false);
-        }, 800);
-        setTimeout(() => {
-          setCurrentScreen(currentScreen + 1);
+          setCurrentScreen(
+            currentScreen === 2 && !firstInStorage && secondInStorage
+              ? currentScreen + 2
+              : currentScreen === 2 && !firstInStorage && !secondInStorage
+              ? currentScreen + 3
+              : currentScreen + 1
+          );
         }, 800);
       }
     } else {
@@ -240,9 +244,8 @@ function App() {
       localStorage.removeItem(key);
     });
     localStorage.removeItem('Done for today');
-    setTimeout(() => {
-      setCurrentScreen(0);
-    }, 400);
+    canUndoRef.current = false;
+    setCurrentScreen(0);
   };
 
   const handleUndo = () => {
@@ -274,7 +277,6 @@ function App() {
       localStorage.removeItem(`Done for today`);
     }
   };
-
 
   console.log('currentScreen is', currentScreen);
 
