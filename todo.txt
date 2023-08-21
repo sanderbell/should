@@ -1,15 +1,12 @@
-Clear all confirmation
-iPhone shadow, fonts
-After filling the field mobile behaviour
+Emoji to svg
 Desktop, iPad styles
-PWA
-Sync blur unblur
 1, 2, 3 are too pale
+Sync blur unblur
 ✅ isn't rotating
 Characters limit
+PWA
 Animation between all screens
 Animation with flying cards
-Emoji to svg
 Colors
 Footer
 Swiping

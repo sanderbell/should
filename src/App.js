@@ -158,7 +158,7 @@ function App() {
     localStorage.setItem('Is it on fire?', JSON.stringify(false));
     setBurntModalVisible(false);
     localStorage.setItem(`Timestamp`, [day, month, year]);
-    window.location.reload();
+    // window.location.reload();
   };
 
   const prevStorageTask =
@@ -292,6 +292,12 @@ function App() {
     canUndoRef.current = false;
   };
 
+  const handleStartAllOver = () => {
+    localStorage.removeItem('Done for today');
+    setCurrentScreen(0);
+    canUndoRef.current = false;
+  };
+
   const startCountdown = () => {
     let timeLeft = 5;
     const interval = setInterval(() => {
@@ -390,6 +396,7 @@ function App() {
         <Final
           {...{
             canFlyAway,
+            handleStartAllOver,
             doneForToday,
             progressWidth,
             handleClearAll,

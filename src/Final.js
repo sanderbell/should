@@ -1,9 +1,11 @@
 import Footer from './Footer';
+import doneIcon from './static/done.png';
 
 function Final({
   screens,
   undoButtonShown,
   canFlyAway,
+  handleStartAllOver,
   doneForToday,
   handleUndo,
   currentScreen,
@@ -88,10 +90,6 @@ function Final({
           </button>
         ) : currentScreen < 3 ? (
           <button onClick={openModal}>ℹ️</button>
-        ) : currentScreen < 6 ? (
-          <button onClick={() => setCurrentScreen(currentScreen - 3)}>
-            ✏️
-          </button>
         ) : null}
         {currentScreen < 2 ? (
           <button
@@ -117,32 +115,35 @@ function Final({
             }
             onClick={currentScreen !== 6 ? () => handleFlyAway() : null}
           >
-            ✅
+            <img draggable='false' src={doneIcon} alt='Done!' />
           </button>
         )}
       </div>
-      {currentScreen < 6 ? (
-        <button id='bottom-button' onClick={handleClearAll}>
-          CLEAR ALL
-        </button>
-      ) : (
-        <button
-          id='bottom-button'
-          onClick={() => {
-            localStorage.removeItem('Done for today');
-            setCurrentScreen(0);
-          }}
-        >
+      {currentScreen < 6 && !undoButtonShown ? (
+        <div id='bottom-buttons-container'>
+          <button
+            className='bottom-button'
+            onClick={() => setCurrentScreen(currentScreen - 3)}
+          >
+            EDIT
+          </button>
+          <button className='bottom-button' onClick={handleClearAll}>
+            CLEAR ALL
+          </button>{' '}
+        </div>
+      ) : currentScreen === 6 && !undoButtonShown ? (
+        <button className='bottom-button' onClick={handleStartAllOver}>
           START ALL OVER
         </button>
-      )}
+      ) : undefined}
       {undoButtonShown === true ? (
         <button onClick={handleUndo} id='can-undo'>
           UNDO
           <div id='progress-bar' style={{ width: `${progressWidth}%` }}></div>
         </button>
       ) : null}
-      {doneForToday && <Footer />}
+
+      {/* {doneForToday && <Footer />} */}
     </div>
   );
 }

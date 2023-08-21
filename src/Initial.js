@@ -1,3 +1,9 @@
+import arrowLeftIcon from './static/larrow.png';
+import arrowRightIcon from './static/rarrow.png';
+import infoIcon from './static/info.png';
+import saluteIcon from './static/salute.png';
+
+
 function Initial({
   contentBlurred,
   modalVisible,
@@ -67,17 +73,17 @@ function Initial({
             onClick={() => setCurrentScreen(currentScreen - 1)}
             disabled={currentScreen === 0 || !prevStorageTask}
           >
-            ⬅️
+            <img draggable='false' src={arrowLeftIcon} alt='Back' />
           </button>
         ) : (
-          <button onClick={openModal}>ℹ️</button>
+          <button onClick={openModal}><img draggable='false' src={infoIcon} alt='Done!' /></button>
         )}
         {currentScreen < 2 ? (
           <button
             onClick={() => setCurrentScreen(currentScreen + 1)}
             disabled={task.length === 0}
           >
-            ➡️
+       <img draggable='false' src={arrowRightIcon} alt='Forward' />
           </button>
         ) : (
           <button
@@ -92,7 +98,7 @@ function Initial({
             }
             disabled={task.length === 0}
           >
-            🫡
+            <img draggable='false' src={saluteIcon} alt='Ready to tackle!' />
           </button>
         )}
       </div>
