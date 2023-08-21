@@ -1,16 +1,20 @@
-import arrowLeftIcon from './static/larrow.png';
-import arrowRightIcon from './static/rarrow.png';
-import infoIcon from './static/info.png';
-import saluteIcon from './static/salute.png';
-
+import ButtonContainer from './ButtonContainer';
 
 function Initial({
+  canFlyAway,
+  noButtonScale,
+  firstInStorage,
+  secondInStorage,
+  thirdInStorage,
+  openModal,
+  handleFlyAway,
+  setScreen,
+  prevStorageTask,
   contentBlurred,
   modalVisible,
   burntModalVisible,
   screens,
-  currentScreen,
-  oldVisitor,
+  screen,
   inputRef,
   isGreen,
   getRandomPlaceholder,
@@ -19,12 +23,6 @@ function Initial({
   handleSaveTask,
   handleTaskInputChange,
   handleBlurContent,
-  firstInStorage,
-  secondInStorage,
-  thirdInStorage,
-  openModal,
-  setCurrentScreen,
-  prevStorageTask,
 }) {
   return (
     <div
@@ -42,12 +40,12 @@ function Initial({
             : null
         }
       >
-        {screens[currentScreen].heading}
+        {screens[screen].heading}
       </h1>
       <input
         ref={inputRef}
         className={`initial-input ${isGreen ? 'initial-input-saved' : ''}`}
-        id={`initial-input-${screens[currentScreen].id}`}
+        id={`initial-input-${screens[screen].id}`}
         type='text'
         autoFocus={contentBlurred}
         autoComplete='off'
@@ -60,48 +58,22 @@ function Initial({
         onChange={handleTaskInputChange}
         onKeyDown={handleKeyDown}
       />
-      <div
-        id='buttons-container'
-        style={
-          contentBlurred
-            ? { opacity: 0.2, filter: 'blur(12px)', transition: 'all 0.5s' }
-            : null
-        }
-      >
-        {currentScreen > 0 ? (
-          <button
-            onClick={() => setCurrentScreen(currentScreen - 1)}
-            disabled={currentScreen === 0 || !prevStorageTask}
-          >
-            <img draggable='false' src={arrowLeftIcon} alt='Back' />
-          </button>
-        ) : (
-          <button onClick={openModal}><img draggable='false' src={infoIcon} alt='Done!' /></button>
-        )}
-        {currentScreen < 2 ? (
-          <button
-            onClick={() => setCurrentScreen(currentScreen + 1)}
-            disabled={task.length === 0}
-          >
-       <img draggable='false' src={arrowRightIcon} alt='Forward' />
-          </button>
-        ) : (
-          <button
-            onClick={() =>
-              firstInStorage
-                ? setCurrentScreen(currentScreen + 1)
-                : secondInStorage
-                ? setCurrentScreen(currentScreen + 2)
-                : thirdInStorage
-                ? setCurrentScreen(currentScreen + 3)
-                : 0
-            }
-            disabled={task.length === 0}
-          >
-            <img draggable='false' src={saluteIcon} alt='Ready to tackle!' />
-          </button>
-        )}
-      </div>
+      <ButtonContainer
+        {...{
+          canFlyAway,
+          noButtonScale,
+          firstInStorage,
+          secondInStorage,
+          thirdInStorage,
+          openModal,
+          handleFlyAway,
+          setScreen,
+          prevStorageTask,
+          contentBlurred,
+          screen,
+          task,
+        }}
+      ></ButtonContainer>
     </div>
   );
 }

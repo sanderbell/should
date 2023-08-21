@@ -1,18 +1,17 @@
-import Footer from './Footer';
-import doneIcon from './static/done.png';
+// import Footer from './Footer';
+import ButtonContainer from './ButtonContainer';
 
 function Final({
   screens,
   undoButtonShown,
   canFlyAway,
   handleStartAllOver,
-  doneForToday,
   handleUndo,
-  currentScreen,
+  screen,
   progressWidth,
   flyAwayIndex,
   handleFlyAway,
-  setCurrentScreen,
+  setScreen,
   openModal,
   task,
   handleClearAll,
@@ -20,110 +19,80 @@ function Final({
 }) {
   return (
     <div id='final-content'>
-      <h1> {screens[currentScreen].heading} </h1>
+      <h1> {screens[screen].heading} </h1>
       <div id='final-screens-container'>
         <div
-          className={`final-screens final-screen-${screens[currentScreen].id} ${
-            flyAwayIndex === currentScreen ? 'fly-away' : ''
+          className={`final-screens final-screen-${screens[screen].id} ${
+            flyAwayIndex === screen ? 'fly-away' : ''
           }`}
           style={{
             animation:
-              flyAwayIndex === currentScreen
+              flyAwayIndex === screen
                 ? 'flyAwayAnimation 1.5s ease 1'
-                : currentScreen === 3
+                : screen === 3
                 ? 'movein-four 2.7s cubic-bezier(0.84, -0.26, 0.16, 1) 1'
                 : 'none',
           }}
         >
           <p className='final-screen-task'>
-            {localStorage.getItem(`Task ${screens[currentScreen - 3].id}`)}
+            {localStorage.getItem(`Task ${screens[screen - 3].id}`)}
           </p>
         </div>
 
-        {currentScreen + 1 < screens.length && (
+        {screen + 1 < screens.length && (
           <div
-            className={`final-screens final-screen-${
-              screens[currentScreen + 1].id
-            }`}
+            className={`final-screens final-screen-${screens[screen + 1].id}`}
             style={{
               animation:
-                flyAwayIndex === currentScreen + 1
+                flyAwayIndex === screen + 1
                   ? 'flyAwayAnimation 1.5s ease 1'
-                  : currentScreen === 3
+                  : screen === 3
                   ? 'movein-five 2.5s cubic-bezier(0.84, -0.26, 0.16, 1) 1'
                   : 'none',
             }}
           >
             <p className='final-screen-task'>
-              {localStorage.getItem(`Task ${screens[currentScreen - 2].id}`)}
+              {localStorage.getItem(`Task ${screens[screen - 2].id}`)}
             </p>
           </div>
         )}
 
-        {currentScreen + 2 < screens.length && (
+        {screen + 2 < screens.length && (
           <div
-            className={`final-screens final-screen-${
-              screens[currentScreen + 2].id
-            }`}
+            className={`final-screens final-screen-${screens[screen + 2].id}`}
             style={{
               animation:
-                flyAwayIndex === currentScreen + 2
+                flyAwayIndex === screen + 2
                   ? 'flyAwayAnimation 1.5s ease 1'
-                  : currentScreen === 3
+                  : screen === 3
                   ? 'movein-six 2.3s cubic-bezier(0.84, -0.26, 0.16, 1) 1'
                   : 'none',
             }}
           >
             <p className='final-screen-task'>
-              {localStorage.getItem(`Task ${screens[currentScreen - 1].id}`)}
+              {localStorage.getItem(`Task ${screens[screen - 1].id}`)}
             </p>
           </div>
         )}
       </div>
-      <div id='buttons-container'>
-        {3 > currentScreen > 0 ? (
-          <button
-            onClick={() => setCurrentScreen(currentScreen - 1)}
-            disabled={currentScreen === 0}
-          >
-            ⬅️ //TODO: ARROW LEFT
-          </button>
-        ) : currentScreen < 3 ? (
-          <button onClick={openModal}>ℹ️</button>
-        ) : null}
-        {currentScreen < 2 ? (
-          <button
-            onClick={() => setCurrentScreen(currentScreen + 1)}
-            disabled={task.length === 0}
-          >
-            ➡️ //TODO: ARROW RIGHT
-          </button>
-        ) : (
-          <button
-            disabled={
-              canFlyAway === false && currentScreen !== 3 && currentScreen !== 6
-            }
-            className={noButtonScale ? 'no-hover' : null}
-            style={
-              currentScreen === 6
-                ? {
-                    transform: 'translateY(-160%) scale(4) rotate(360deg)', //FIXME: delete scale from button:hover
-                    transition:
-                      'transform 2s cubic-bezier(0.84, -0.5, 0.16, 1)',
-                  }
-                : null
-            }
-            onClick={currentScreen !== 6 ? () => handleFlyAway() : null}
-          >
-            <img draggable='false' src={doneIcon} alt='Done!' />
-          </button>
-        )}
-      </div>
-      {currentScreen < 6 && !undoButtonShown ? (
+
+      <ButtonContainer
+        {...{
+          canFlyAway,
+          noButtonScale,
+          openModal,
+          handleFlyAway,
+          setScreen,
+          screen,
+          task,
+        }}
+      />
+
+      {screen < 6 && !undoButtonShown ? (
         <div id='bottom-buttons-container'>
           <button
             className='bottom-button'
-            onClick={() => setCurrentScreen(currentScreen - 3)}
+            onClick={() => setScreen(screen - 3)}
           >
             EDIT
           </button>
@@ -131,7 +100,7 @@ function Final({
             CLEAR ALL
           </button>{' '}
         </div>
-      ) : currentScreen === 6 && !undoButtonShown ? (
+      ) : screen === 6 && !undoButtonShown ? (
         <button className='bottom-button' onClick={handleStartAllOver}>
           START ALL OVER
         </button>

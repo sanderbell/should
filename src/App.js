@@ -93,7 +93,7 @@ function App() {
 
   const allInStorage = firstInStorage && secondInStorage && thirdInStorage;
 
-  const [currentScreen, setCurrentScreen] = useState(
+  const [screen, setscreen] = useState(
     allInStorage
       ? 3
       : secondInStorage && thirdInStorage
@@ -117,13 +117,13 @@ function App() {
   const canUndoRef = useRef(false); // A var that carries the fact that user pressed undo button thru all rerenders
   const undoButtonShown = canUndoRef.current;
 
-  const storageTask = localStorage.getItem(`Task ${screens[currentScreen].id}`);
+  const storageTask = localStorage.getItem(`Task ${screens[screen].id}`);
   const doneForToday = localStorage.getItem(`Done for today`);
 
   const inputRef = useRef(null);
 
   useEffect(() => {
-    doneForToday && !allInStorage && setCurrentScreen(6);
+    doneForToday && !allInStorage && setscreen(6);
   }, [allInStorage, doneForToday]);
 
   useEffect(() => {
@@ -162,8 +162,8 @@ function App() {
   };
 
   const prevStorageTask =
-    currentScreen > 0
-      ? localStorage.getItem(`Task ${screens[currentScreen - 1].id}`)
+    screen > 0
+      ? localStorage.getItem(`Task ${screens[screen - 1].id}`)
       : null;
 
   useEffect(() => {
@@ -176,29 +176,29 @@ function App() {
 
   const handleFlyAway = () => {
     canUndoRef.current = true;
-    currentScreen === 5 && setNoButtonScale(true);
-    setFlyAwayIndex(currentScreen);
+    screen === 5 && setNoButtonScale(true);
+    setFlyAwayIndex(screen);
     setCanFlyAway(false);
 
     startCountdown();
 
     setTimeout(() => {
-      setCurrentScreen(currentScreen + 1);
+      setscreen(screen + 1);
       setFlyAwayIndex(-1);
     }, 500);
 
     if (canUndoRef.current) {
-      if (currentScreen === 3) {
+      if (screen === 3) {
         const taskOneData = localStorage.getItem('Task one');
         localStorage.setItem('Mask one', taskOneData);
         localStorage.removeItem('Task one');
         console.log('Task one changed to Mask one');
-      } else if (currentScreen === 4) {
+      } else if (screen === 4) {
         const taskTwoData = localStorage.getItem('Task two');
         localStorage.setItem('Mask two', taskTwoData);
         localStorage.removeItem('Task two');
         console.log('Task two changed to Mask two');
-      } else if (currentScreen === 5) {
+      } else if (screen === 5) {
         const taskThreeData = localStorage.getItem('Task three');
         localStorage.setItem('Mask three', taskThreeData);
         localStorage.removeItem('Task three');
@@ -220,23 +220,23 @@ function App() {
   const handleSaveTask = () => {
     setContentBlurred(false);
     if (task.length > 0) {
-      if (task !== localStorage.getItem(`Task ${screens[currentScreen].id}`)) {
+      if (task !== localStorage.getItem(`Task ${screens[screen].id}`)) {
         setIsGreen(true);
-        localStorage.setItem(`Task ${screens[currentScreen].id}`, task.trim());
+        localStorage.setItem(`Task ${screens[screen].id}`, task.trim());
         setTask(task.trim());
         setTimeout(() => {
           setIsGreen(false);
-          setCurrentScreen(
-            currentScreen === 2 && !firstInStorage && secondInStorage
-              ? currentScreen + 2
-              : currentScreen === 2 && !firstInStorage && !secondInStorage
-              ? currentScreen + 3
-              : currentScreen + 1
+          setscreen(
+            screen === 2 && !firstInStorage && secondInStorage
+              ? screen + 2
+              : screen === 2 && !firstInStorage && !secondInStorage
+              ? screen + 3
+              : screen + 1
           );
         }, 800);
       }
     } else {
-      localStorage.removeItem(`Task ${screens[currentScreen].id}`);
+      localStorage.removeItem(`Task ${screens[screen].id}`);
       getRandomPlaceholder();
     }
   };
@@ -263,25 +263,25 @@ function App() {
       });
       localStorage.removeItem('Done for today');
       canUndoRef.current = false;
-      setCurrentScreen(0);
+      setscreen(0);
     }
   };
 
   const handleUndo = () => {
-    setCurrentScreen(currentScreen - 1);
+    setscreen(screen - 1);
     setCanFlyAway(true);
 
-    if (currentScreen === 4) {
+    if (screen === 4) {
       const maskOneData = localStorage.getItem('Mask one');
       localStorage.setItem('Task one', maskOneData);
       localStorage.removeItem('Mask one');
       console.log('Mask one changed to Task one');
-    } else if (currentScreen === 5) {
+    } else if (screen === 5) {
       const maskTwoData = localStorage.getItem('Mask two');
       localStorage.setItem('Task two', maskTwoData);
       localStorage.removeItem('Mask two');
       console.log('Mask two changed to Task two');
-    } else if (currentScreen === 6) {
+    } else if (screen === 6) {
       const maskThreeData = localStorage.getItem('Mask three');
       localStorage.setItem('Task three', maskThreeData);
       localStorage.removeItem('Mask three');
@@ -294,7 +294,7 @@ function App() {
 
   const handleStartAllOver = () => {
     localStorage.removeItem('Done for today');
-    setCurrentScreen(0);
+    setscreen(0);
     canUndoRef.current = false;
   };
 
@@ -322,24 +322,24 @@ function App() {
     }
   };
 
-  console.log('currentScreen is', currentScreen);
+  console.log('screen is', screen);
 
   const statusBarStyle = document.getElementById('status-bar-style');
 
   if (statusBarStyle) {
     statusBarStyle.setAttribute(
       'content',
-      currentScreen === 0
+      screen === 0
         ? '#ffe8ea'
-        : currentScreen === 1
+        : screen === 1
         ? '#fff5e8'
-        : currentScreen === 2
+        : screen === 2
         ? '#e8fffe'
-        : currentScreen === 3
+        : screen === 3
         ? '#f8f2f0'
-        : currentScreen === 4
+        : screen === 4
         ? '#f2f1e9'
-        : currentScreen === 5
+        : screen === 5
         ? '#d8f4f5'
         : '#e7fce6'
     );
@@ -350,17 +350,17 @@ function App() {
       className='App'
       style={{
         backgroundColor:
-          currentScreen === 0
+          screen === 0
             ? '#ffe8ea'
-            : currentScreen === 1
+            : screen === 1
             ? '#fff5e8'
-            : currentScreen === 2
+            : screen === 2
             ? '#e8fffe'
-            : currentScreen === 3
+            : screen === 3
             ? '#f8f2f0'
-            : currentScreen === 4
+            : screen === 4
             ? '#f2f1e9'
-            : currentScreen === 5
+            : screen === 5
             ? '#d8f4f5'
             : '#e7fce6',
       }}
@@ -369,13 +369,21 @@ function App() {
 
       {burntModalVisible && isOnFire && <BurntModal {...{ closeBurntModal }} />}
 
-      {currentScreen < 3 ? (
+      {screen < 3 ? (
         <Initial
-          {...{
+          {...{canFlyAway,
+            noButtonScale,
+            firstInStorage,
+            secondInStorage,
+            thirdInStorage,
+            openModal,
+            handleFlyAway,
+            setscreen,
+            prevStorageTask,
             inputRef,
             modalVisible,
             screens,
-            currentScreen,
+            screen,
             oldVisitor,
             isGreen,
             contentBlurred,
@@ -383,13 +391,7 @@ function App() {
             task,
             handleSaveTask,
             handleTaskInputChange,
-            handleBlurContent,
-            firstInStorage,
-            secondInStorage,
-            thirdInStorage,
-            openModal,
-            setCurrentScreen,
-            prevStorageTask,
+            handleBlurContent
           }}
         />
       ) : (
@@ -403,10 +405,10 @@ function App() {
             handleUndo,
             undoButtonShown,
             screens,
-            currentScreen,
+            screen,
             flyAwayIndex,
             handleFlyAway,
-            setCurrentScreen,
+            setscreen,
             openModal,
             task,
             noButtonScale,
