@@ -1,4 +1,4 @@
-import ButtonContainer from './ButtonContainer';
+import IconButtonContainer from './IconButtonContainer';
 
 function Initial({
   canFlyAway,
@@ -58,7 +58,7 @@ function Initial({
         onChange={handleTaskInputChange}
         onKeyDown={handleKeyDown}
       />
-      <ButtonContainer
+      <IconButtonContainer
         {...{
           canFlyAway,
           noButtonScale,
@@ -73,7 +73,7 @@ function Initial({
           screen,
           task,
         }}
-      ></ButtonContainer>
+      />
     </div>
   );
 }

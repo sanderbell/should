@@ -1,7 +1,9 @@
 // import Footer from './Footer';
-import ButtonContainer from './ButtonContainer';
+import BottomButtonContainer from './BottomButtonContainer';
+import IconButtonContainer from './IconButtonContainer';
 
 function Final({
+  handleEdit,
   screens,
   undoButtonShown,
   canFlyAway,
@@ -76,7 +78,7 @@ function Final({
         )}
       </div>
 
-      <ButtonContainer
+      <IconButtonContainer
         {...{
           canFlyAway,
           noButtonScale,
@@ -87,32 +89,18 @@ function Final({
           task,
         }}
       />
-
-      {screen < 6 && !undoButtonShown ? (
-        <div id='bottom-buttons-container'>
-          <button
-            className='bottom-button'
-            onClick={() => setScreen(screen - 3)}
-          >
-            EDIT
-          </button>
-          <button className='bottom-button' onClick={handleClearAll}>
-            CLEAR ALL
-          </button>{' '}
-        </div>
-      ) : screen === 6 && !undoButtonShown ? (
-        <button className='bottom-button' onClick={handleStartAllOver}>
-          START ALL OVER
-        </button>
-      ) : undefined}
-      {undoButtonShown === true ? (
-        <button onClick={handleUndo} id='can-undo'>
-          UNDO
-          <div id='progress-bar' style={{ width: `${progressWidth}%` }}></div>
-        </button>
-      ) : null}
-
-      {/* {doneForToday && <Footer />} */}
+      <BottomButtonContainer
+        {...{
+          handleEdit,
+          setScreen,
+          undoButtonShown,
+          screen,
+          handleClearAll,
+          handleStartAllOver,
+          progressWidth,
+          handleUndo,
+        }}
+      />
     </div>
   );
 }

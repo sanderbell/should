@@ -4,7 +4,7 @@ import infoIcon from './static/info.png';
 import saluteIcon from './static/salute.png';
 import doneIcon from './static/done.png';
 
-function ButtonContainer({
+function IconButtonContainer({
   canFlyAway,
   noButtonScale,
   firstInStorage,
@@ -84,8 +84,8 @@ function ButtonContainer({
           style={
             screen === 6
               ? {
-                  transform: 'translateY(-160%) scale(4) rotate(360deg)', //FIXME: delete scale from button:hover
-                  transition: 'transform 2s cubic-bezier(0.84, -0.5, 0.16, 1)',
+                  transform: 'translateY(-160%) scale(3) rotate(360deg)',
+                  transition: 'transform 2s cubic-bezier(0.84, -0.7, 0.16, 1)',
                 }
               : null
           }
@@ -93,9 +93,11 @@ function ButtonContainer({
         >
           <img draggable='false' src={doneIcon} alt='Done!' />
         </button>
-      ) : 'null'}
+      ) : (
+        'null'
+      )}
     </div>
   );
 }
 
-export default ButtonContainer;
+export default IconButtonContainer;

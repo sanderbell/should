@@ -93,7 +93,7 @@ function App() {
 
   const allInStorage = firstInStorage && secondInStorage && thirdInStorage;
 
-  const [screen, setscreen] = useState(
+  const [screen, setScreen] = useState(
     allInStorage
       ? 3
       : secondInStorage && thirdInStorage
@@ -123,7 +123,7 @@ function App() {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    doneForToday && !allInStorage && setscreen(6);
+    doneForToday && !allInStorage && setScreen(6);
   }, [allInStorage, doneForToday]);
 
   useEffect(() => {
@@ -162,9 +162,7 @@ function App() {
   };
 
   const prevStorageTask =
-    screen > 0
-      ? localStorage.getItem(`Task ${screens[screen - 1].id}`)
-      : null;
+    screen > 0 ? localStorage.getItem(`Task ${screens[screen - 1].id}`) : null;
 
   useEffect(() => {
     if (storageTask) {
@@ -183,7 +181,7 @@ function App() {
     startCountdown();
 
     setTimeout(() => {
-      setscreen(screen + 1);
+      setScreen(screen + 1);
       setFlyAwayIndex(-1);
     }, 500);
 
@@ -226,7 +224,7 @@ function App() {
         setTask(task.trim());
         setTimeout(() => {
           setIsGreen(false);
-          setscreen(
+          setScreen(
             screen === 2 && !firstInStorage && secondInStorage
               ? screen + 2
               : screen === 2 && !firstInStorage && !secondInStorage
@@ -263,12 +261,12 @@ function App() {
       });
       localStorage.removeItem('Done for today');
       canUndoRef.current = false;
-      setscreen(0);
+      setScreen(0);
     }
   };
 
   const handleUndo = () => {
-    setscreen(screen - 1);
+    setScreen(screen - 1);
     setCanFlyAway(true);
 
     if (screen === 4) {
@@ -292,9 +290,13 @@ function App() {
     canUndoRef.current = false;
   };
 
+  const handleEdit = () => {
+    setScreen(screen - 3);
+  };
+
   const handleStartAllOver = () => {
     localStorage.removeItem('Done for today');
-    setscreen(0);
+    setScreen(0);
     canUndoRef.current = false;
   };
 
@@ -371,14 +373,15 @@ function App() {
 
       {screen < 3 ? (
         <Initial
-          {...{canFlyAway,
+          {...{
+            canFlyAway,
             noButtonScale,
             firstInStorage,
             secondInStorage,
             thirdInStorage,
             openModal,
             handleFlyAway,
-            setscreen,
+            setScreen,
             prevStorageTask,
             inputRef,
             modalVisible,
@@ -391,12 +394,13 @@ function App() {
             task,
             handleSaveTask,
             handleTaskInputChange,
-            handleBlurContent
+            handleBlurContent,
           }}
         />
       ) : (
         <Final
           {...{
+            handleEdit,
             canFlyAway,
             handleStartAllOver,
             doneForToday,
@@ -408,7 +412,7 @@ function App() {
             screen,
             flyAwayIndex,
             handleFlyAway,
-            setscreen,
+            setScreen,
             openModal,
             task,
             noButtonScale,
