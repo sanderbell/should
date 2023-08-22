@@ -304,13 +304,16 @@ function App() {
     setScreen(screen - 3);
     setTimeout(() => {
       inputRef.current.focus();
-    }, 600);
+    }, 500);
   };
 
   const handleStartAllOver = () => {
     localStorage.removeItem('Done for today');
     setScreen(0);
     canUndoRef.current = false;
+    setTimeout(() => {
+      inputRef.current.focus();
+    }, 500);
   };
 
   const startCountdown = () => {

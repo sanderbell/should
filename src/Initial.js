@@ -28,7 +28,7 @@ function Initial({
   return (
     <div
       className={
-        modalVisible || burntModalVisible 
+        modalVisible || burntModalVisible
           ? 'initial-content blurred'
           : 'initial-content'
       }
@@ -48,7 +48,7 @@ function Initial({
         className={`initial-input ${isGreen ? 'initial-input-saved' : ''}`}
         id={`initial-input-${screens[screen].id}`}
         type='text'
-        autoFocus={contentBlurred}
+        // autoFocus={contentBlurred || inputRef}
         autoComplete='off'
         maxLength='25'
         spellCheck='false'
@@ -57,7 +57,7 @@ function Initial({
         onFocus={handleBlurContent}
         onBlur={handleSaveTask}
         onChange={handleTaskInputChange}
-        onKeyDown={handleKeyDown}
+        // onKeyDown={handleKeyDown}
       />
       <IconButtonContainer
         {...{

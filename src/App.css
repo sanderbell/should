@@ -67,9 +67,9 @@ body {
 }
 
 h1 {
-  font-size: calc(2rem + 5vmin);
-  height: 2em;
-  line-height: 1.06em;
+  font-size: calc(2.1rem + 5vmin);
+  height: 1.9em;
+  line-height: 1.15em;
 }
 
 .initial-input {
@@ -83,7 +83,7 @@ h1 {
   box-shadow: 0.6em 0.6em 1.5vh #c5c2c28a;
   color: #6b6b6b;
   font-family: inherit;
-  font-size: 4.4vmin;
+  font-size: 4.5vmin;
   font-weight: 800;
   margin: 25px 30px;
   outline: none;
@@ -98,7 +98,7 @@ h1 {
   -webkit-box-shadow: 1em 1em 2.5vh #8f8c8c8a;
   box-shadow: 1em 1em 2.5vh #8f8c8c8a;
   outline: none;
-  transform: scale(1.17);
+  transform: scale(1.16);
 }
 
 .initial-input::placeholder {
