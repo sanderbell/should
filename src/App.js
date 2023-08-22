@@ -113,6 +113,7 @@ function App() {
   const [progressWidth, setProgressWidth] = useState(100);
   const [noButtonScale, setNoButtonScale] = useState(false);
   const [canFlyAway, setCanFlyAway] = useState(true);
+  // const [blurTransitionVisible, setBlurTransitionVisible] = useState('nay!');
 
   const canUndoRef = useRef(false); // A var that carries the fact that user pressed undo button thru all rerenders
   const undoButtonShown = canUndoRef.current;
@@ -139,6 +140,16 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // useEffect(() => {
+  //   if (0 < screen < 3) {
+  //     setBlurTransitionVisible('yay!');
+
+  //     setTimeout(() => {
+  //       setBlurTransitionVisible(null);
+  //     }, 220);
+  //   }
+  // }, [screen]);
+
   const isOnFire = oldVisitor
     ? JSON.parse(localStorage.getItem('Is it on fire?'))
     : false;
@@ -158,7 +169,6 @@ function App() {
     localStorage.setItem('Is it on fire?', JSON.stringify(false));
     setBurntModalVisible(false);
     localStorage.setItem(`Timestamp`, [day, month, year]);
-    // window.location.reload();
   };
 
   const prevStorageTask =
@@ -235,7 +245,7 @@ function App() {
       }
     } else {
       localStorage.removeItem(`Task ${screens[screen].id}`);
-      getRandomPlaceholder();
+      // getRandomPlaceholder();
     }
   };
 
@@ -292,6 +302,9 @@ function App() {
 
   const handleEdit = () => {
     setScreen(screen - 3);
+    setTimeout(() => {
+      inputRef.current.focus();
+    }, 600);
   };
 
   const handleStartAllOver = () => {
@@ -395,6 +408,7 @@ function App() {
             handleSaveTask,
             handleTaskInputChange,
             handleBlurContent,
+            // blurTransitionVisible,
           }}
         />
       ) : (

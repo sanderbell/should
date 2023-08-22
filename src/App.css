@@ -1,27 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Secular+One&family=Cabin&display=swap');
 
 html {
+  -webkit-appearance: none;
+  appearance: auto;
   box-sizing: border-box;
   height: 100%;
   margin: 0;
   padding: 0;
   width: 100%;
-  appearance: auto;
-  -webkit-appearance: none;
-
 }
 
 body {
+  -webkit-appearance: none;
   -webkit-letter-spacing: 0.4em;
-  color: #6b6b6b;
+  appearance: auto;
+  color: #727272;
   font-family: 'Secular One', sans-serif;
   height: 100dvh;
   letter-spacing: normal;
   overflow: hidden;
   user-select: none;
   width: 100dvw;
-  appearance: auto;
-  -webkit-appearance: none;
 }
 
 *,
@@ -31,7 +30,6 @@ body {
   margin: 0;
   padding: 0;
   user-select: none;
-  /* border: #6b6b6b 1px solid; */
 }
 
 #root {
@@ -49,11 +47,11 @@ body {
 }
 
 .initial-content {
+  align-items: center;
+  animation: fadein 0.4s linear 1;
   background-position: center;
   background-repeat: repeat;
   background-size: 30vw 15vh;
-  align-items: center;
-  animation: fadein 0.4s linear 1;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -69,7 +67,7 @@ body {
 }
 
 h1 {
-  font-size: calc(2.3rem + 5vmin);
+  font-size: calc(2rem + 5vmin);
   height: 2em;
   line-height: 1.06em;
 }
@@ -85,11 +83,11 @@ h1 {
   box-shadow: 0.6em 0.6em 1.5vh #c5c2c28a;
   color: #6b6b6b;
   font-family: inherit;
-  font-size: 4.7vmin;
+  font-size: 4.4vmin;
   font-weight: 800;
-  margin: 30px 30px;
+  margin: 25px 30px;
   outline: none;
-  padding: 1.5em;
+  padding: 1.5em 2.5em;
   text-align: center;
   text-overflow: ellipsis;
   text-transform: uppercase;
@@ -125,33 +123,32 @@ h1 {
 }
 
 button img {
+  height: 100%;
   opacity: 0.75;
   width: 100%;
-  height: 100%;
 }
 
 button {
-  text-align: center;
-  max-width: 20vmin;
   background: none;
   border: none;
+  color: #383838;
   font-family: 'Secular One', sans-serif;
+  max-width: 18vmin;
+  text-align: center;
   transition: all 0.5s ease;
 }
 
 button:disabled {
-  opacity: 0.4;
+  opacity: 0.5;
 }
 
 button:hover {
   border: none;
   cursor: pointer;
-  /* transform: scale(1.1); */
 }
 
 button:disabled:hover {
   opacity: 0.4;
-  /* transform: scale(1); */
 }
 
 .no-hover:hover {
@@ -160,8 +157,8 @@ button:disabled:hover {
 
 .bottom-button {
   font-size: 0.9rem;
-  opacity: 0.3;
   max-width: 150px;
+  opacity: 0.3;
 }
 
 .bottom-button:hover {
@@ -171,10 +168,9 @@ button:disabled:hover {
 
 #bottom-buttons-container {
   display: flex;
-  width: 200px;
-  min-height: 50px;
   justify-content: space-evenly;
-
+  min-height: 50px;
+  width: 200px;
 }
 
 #button-start-again {
@@ -182,19 +178,18 @@ button:disabled:hover {
 }
 
 #can-undo {
-  background-color: #5959595e;
-  border-radius: 0.8em;
-  font-size: 1.1rem;
-  opacity: 0.8;
-  padding: 0.6em;
+  background-color: #aaaaaa5e;
+  border-radius: 0.9em;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  padding: 0.4em;
   position: relative;
   z-index: 1;
 }
 
 #progress-bar {
-
   background-color: #fff;
-  border-radius: 0.8em;
+  border-radius: 0.9em;
   height: 100%;
   left: 0;
   overflow: hidden;
@@ -231,14 +226,14 @@ button:disabled:hover {
 
 .modal-heading {
   font-size: calc(2.15rem + 5vmin);
-  line-height: 1.08em;
+  line-height: 1.1em;
 }
 
 .modal-text {
   font-family: 'Cabin', sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  line-height: 1.5em;
+  line-height: 1.35em;
   text-align: justify;
 }
 
@@ -250,22 +245,23 @@ button:disabled:hover {
 }
 
 #modal-span-one {
-  background-color: #f8dede;
+  background-color: #ffe8ea;
   padding: 0 0.5em;
 }
 
 #modal-span-two {
-  background-color: #edf3cd;
+  background-color: #fffad7;
 }
 
 #modal-span-three {
-  background-color: #d0ecf1;
+  background-color: #e8fffe;
 }
 
-.ready-btn {
-  animation: handshake 0.5s linear infinite alternate;
-  font-size: 23vmin;
+.modal-btn {
+  animation: handshake 1s linear infinite alternate;
+  height: 18vmin;
   margin: 0;
+  max-width: 18vmin;
   padding: 0;
 }
 
@@ -308,30 +304,18 @@ button:disabled:hover {
 
 .final-screen-four {
   background-color: #ffe8ea;
-  background-image: url(/src/static/one.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 80% 80%;
   transform: rotate(0deg);
   z-index: 4;
 }
 
 .final-screen-five {
-  background-color: #fff5e8;
-  background-image: url(/src/static/two.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 80% 80%;
+  background-color: #fffad7;
   transform: rotate(10deg);
   z-index: 3;
 }
 
 .final-screen-six {
   background-color: #e8fffe;
-  background-image: url(/src/static/three.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 80% 80%;
   transform: rotate(-10deg);
   z-index: 2;
 }
@@ -343,7 +327,7 @@ button:disabled:hover {
 }
 
 .final-screen-task {
-  font-size: 5vmin;
+  font-size: 4.5vmin;
   font-weight: 800;
   max-width: 80%;
   text-transform: uppercase;

@@ -1,8 +1,5 @@
-Emoji to svg
 Desktop, iPad styles
-1, 2, 3 are too pale
 Sync blur unblur
-✅ isn't rotating
 Characters limit
 PWA
 Animation between all screens

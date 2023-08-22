@@ -7,6 +7,7 @@ function Initial({
   secondInStorage,
   thirdInStorage,
   openModal,
+  blurTransitionVisible,
   handleFlyAway,
   setScreen,
   prevStorageTask,
@@ -27,7 +28,7 @@ function Initial({
   return (
     <div
       className={
-        modalVisible || burntModalVisible
+        modalVisible || burntModalVisible 
           ? 'initial-content blurred'
           : 'initial-content'
       }
@@ -49,7 +50,7 @@ function Initial({
         type='text'
         autoFocus={contentBlurred}
         autoComplete='off'
-        maxLength='20'
+        maxLength='25'
         spellCheck='false'
         placeholder={getRandomPlaceholder()}
         value={isGreen ? 'Saved!' : task}

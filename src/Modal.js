@@ -1,4 +1,5 @@
-import Footer from './Footer';
+// import Footer from './Footer';
+import okIcon from './static/ok.png';
 
 function Modal({ closeModal }) {
   return (
@@ -19,15 +20,15 @@ function Modal({ closeModal }) {
           <span className='modal-span' id='modal-span-three'>
             3
           </span>{' '}
-          the least important. As the clock strikes midnight, those to-dos
+          the least important. <br></br><br></br>As the clock strikes midnight, those to-dos
           vanish in a puff of smoke, making way for a fresh day. Hey, let's keep
-          it snappy: up to 20 characters each. Are you in?
+          it snappy: up to 25 characters each. Are you in?
         </p>
-        <button className='ready-btn' onClick={closeModal}>
-          🤝
+        <button className='modal-btn' onClick={closeModal}>
+          <img src={okIcon} alt='Deal!'/>
         </button>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

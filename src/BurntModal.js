@@ -1,4 +1,5 @@
-import Footer from './Footer';
+// import Footer from './Footer';
+import extIcon from './static/ext.png';
 
 function BurntModal({ closeBurntModal }) {
   return (
@@ -10,11 +11,11 @@ function BurntModal({ closeBurntModal }) {
           to-dos! Behold, a new day dawns with fresh challenges! Let's conquer
           them with fervor!
         </p>
-        <button className='ready-btn' onClick={closeBurntModal}>
-          🧯
+        <button className='modal-btn' onClick={closeBurntModal}>
+          <img src={extIcon} alt='Deal!' />
         </button>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
