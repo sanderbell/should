@@ -223,7 +223,7 @@ function App() {
     setTimeout(() => {
       canUndoRef.current = false;
       setCanFlyAway(true);
-    }, 5000);
+    }, 2000);
   };
 
   const handleTaskInputChange = (e) => {
@@ -250,7 +250,6 @@ function App() {
       }
     } else {
       localStorage.removeItem(`Task ${screens[screen].id}`);
-      // getRandomPlaceholder();
     }
   };
 
@@ -326,10 +325,10 @@ function App() {
   };
 
   const startCountdown = () => {
-    let timeLeft = 5;
+    let timeLeft = 2;
     const interval = setInterval(() => {
       timeLeft -= 0.1;
-      setProgressWidth((timeLeft / 5) * 100);
+      setProgressWidth((timeLeft / 2) * 100);
       if (timeLeft <= 0 || canUndoRef.current === false) {
         clearInterval(interval);
       }
