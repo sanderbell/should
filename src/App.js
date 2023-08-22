@@ -150,6 +150,11 @@ function App() {
   //   }
   // }, [screen]);
 
+  function isNotIOS() {
+    const userAgent = window.navigator.userAgent;
+    return !(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream);
+  }
+
   const isOnFire = oldVisitor
     ? JSON.parse(localStorage.getItem('Is it on fire?'))
     : false;
@@ -270,6 +275,10 @@ function App() {
       localStorage.removeItem('Done for today');
       canUndoRef.current = false;
       setScreen(0);
+      isNotIOS() &&
+        setTimeout(() => {
+          inputRef.current.focus();
+        }, 500);
     }
   };
 
@@ -299,18 +308,21 @@ function App() {
 
   const handleEdit = () => {
     setScreen(screen - 3);
-    setTimeout(() => {
-      inputRef.current.focus();
-    }, 500);
+
+    isNotIOS() &&
+      setTimeout(() => {
+        inputRef.current.focus();
+      }, 500);
   };
 
   const handleStartAllOver = () => {
     localStorage.removeItem('Done for today');
     setScreen(0);
     canUndoRef.current = false;
-    setTimeout(() => {
-      inputRef.current.focus();
-    }, 500);
+    isNotIOS() &&
+      setTimeout(() => {
+        inputRef.current.focus();
+      }, 500);
   };
 
   const startCountdown = () => {
