@@ -25,7 +25,7 @@ function BottomButtonContainer({
           className='bottom-button'
           onClick={handleStartAllOver}
         >
-          SET NEW TASKS TODAY
+          SET NEW TASKS
         </button>
       ) : undefined}
       {undoButtonShown === true ? (

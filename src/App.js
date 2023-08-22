@@ -254,9 +254,7 @@ function App() {
   };
 
   const handleClearAll = () => {
-    const userConfirmed = window.confirm(
-      'Are you sure you want to clear all tasks?'
-    );
+    const userConfirmed = window.confirm('Should we remove all tasks?');
 
     if (userConfirmed) {
       [
@@ -276,6 +274,7 @@ function App() {
   };
 
   const handleUndo = () => {
+    canUndoRef.current = false;
     setScreen(screen - 1);
     setCanFlyAway(true);
 
@@ -296,8 +295,6 @@ function App() {
       console.log('Mask three changed to Task three');
       localStorage.setItem('Done for today', JSON.stringify(true));
     }
-
-    canUndoRef.current = false;
   };
 
   const handleEdit = () => {

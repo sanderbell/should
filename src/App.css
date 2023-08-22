@@ -1,4 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Secular+One&family=Cabin&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Catamaran&display=swap');
+
+
+
+
+
+
 
 html {
   -webkit-appearance: none;
@@ -15,7 +21,6 @@ body {
   -webkit-letter-spacing: 0.4em;
   appearance: auto;
   color: #727272;
-  font-family: 'Secular One', sans-serif;
   height: 100dvh;
   letter-spacing: normal;
   overflow: hidden;
@@ -67,9 +72,11 @@ body {
 }
 
 h1 {
-  font-size: calc(2.1rem + 5vmin);
-  height: 1.9em;
-  line-height: 1.15em;
+  font-family: 'Carter One', sans-serif;
+  font-size: calc(2.2rem + 5vmin);
+  height: 2em;
+  line-height: 1.1em;
+  /* text-transform: uppercase; */
 }
 
 .initial-input {
@@ -156,7 +163,8 @@ button:disabled:hover {
 }
 
 .bottom-button {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 800;
   max-width: 150px;
   opacity: 0.3;
 }
@@ -182,6 +190,8 @@ button:disabled:hover {
   border-radius: 0.9em;
   font-size: 0.9rem;
   opacity: 0.7;
+  font-weight: 800;
+
   padding: 0.4em;
   position: relative;
   z-index: 1;
@@ -220,41 +230,47 @@ button:disabled:hover {
   flex-direction: column;
   height: 100%;
   justify-content: space-evenly;
-  margin: 2.3rem 0;
+  margin: 1.5rem 0;
   width: 80%;
 }
 
 .modal-heading {
   font-size: calc(2.15rem + 5vmin);
   line-height: 1.1em;
+  font-family: 'Carter One', sans-serif;
+
 }
 
 .modal-text {
-  font-family: 'Cabin', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1.35em;
-  text-align: justify;
+  font-family: 'Catamaran', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.36em;
+  text-align: left;
 }
 
 .modal-span {
-  border: 1px solid #bcbcbc;
-  border-radius: 50%;
+  border: 1px solid #9d9d9d;
+  border-radius: 20%;
   color: #818181;
-  padding: 0 0.4em;
+  font-size: 0.9rem;
+
+
 }
 
 #modal-span-one {
   background-color: #ffe8ea;
-  padding: 0 0.5em;
+  padding: 0 0.7em;
 }
 
 #modal-span-two {
   background-color: #fffad7;
+  padding: 0 0.6em;
 }
 
 #modal-span-three {
   background-color: #e8fffe;
+  padding: 0 0.6em;
 }
 
 .modal-btn {
@@ -339,7 +355,7 @@ button:disabled:hover {
 
 footer {
   bottom: 3%;
-  font-family: 'Cabin', sans-serif;
+  font-family: 'Catamaran', sans-serif;
   font-size: 0.5em;
   opacity: 0.5;
   position: absolute;
