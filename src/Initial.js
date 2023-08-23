@@ -7,7 +7,7 @@ function Initial({
   secondInStorage,
   thirdInStorage,
   openModal,
-  blurTransitionVisible,
+  // blurTransitionVisible,
   handleFlyAway,
   setScreen,
   prevStorageTask,

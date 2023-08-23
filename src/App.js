@@ -223,7 +223,7 @@ function App() {
     setTimeout(() => {
       canUndoRef.current = false;
       setCanFlyAway(true);
-    }, 2000);
+    }, 1800);
   };
 
   const handleTaskInputChange = (e) => {
@@ -325,10 +325,10 @@ function App() {
   };
 
   const startCountdown = () => {
-    let timeLeft = 2;
+    let timeLeft = 1.8;
     const interval = setInterval(() => {
       timeLeft -= 0.1;
-      setProgressWidth((timeLeft / 2) * 100);
+      setProgressWidth((timeLeft / 1.8) * 100);
       if (timeLeft <= 0 || canUndoRef.current === false) {
         clearInterval(interval);
       }
@@ -373,7 +373,7 @@ function App() {
 
   return (
     <div
-      className='App'
+      id='desktop-container'
       style={{
         backgroundColor:
           screen === 0
@@ -391,59 +391,65 @@ function App() {
             : '#e7fce6',
       }}
     >
-      {(modalVisible || oldVisitor === false) && <Modal {...{ closeModal }} />}
+      <div className='App'>
+        {(modalVisible || oldVisitor === false) && (
+          <Modal {...{ closeModal }} />
+        )}
 
-      {burntModalVisible && isOnFire && <BurntModal {...{ closeBurntModal }} />}
+        {burntModalVisible && isOnFire && (
+          <BurntModal {...{ closeBurntModal }} />
+        )}
 
-      {screen < 3 ? (
-        <Initial
-          {...{
-            canFlyAway,
-            noButtonScale,
-            firstInStorage,
-            secondInStorage,
-            thirdInStorage,
-            openModal,
-            handleFlyAway,
-            setScreen,
-            prevStorageTask,
-            inputRef,
-            modalVisible,
-            screens,
-            screen,
-            oldVisitor,
-            isGreen,
-            contentBlurred,
-            getRandomPlaceholder,
-            task,
-            handleSaveTask,
-            handleTaskInputChange,
-            handleBlurContent,
-            // blurTransitionVisible,
-          }}
-        />
-      ) : (
-        <Final
-          {...{
-            handleEdit,
-            canFlyAway,
-            handleStartAllOver,
-            doneForToday,
-            progressWidth,
-            handleClearAll,
-            handleUndo,
-            undoButtonShown,
-            screens,
-            screen,
-            flyAwayIndex,
-            handleFlyAway,
-            setScreen,
-            openModal,
-            task,
-            noButtonScale,
-          }}
-        />
-      )}
+        {screen < 3 ? (
+          <Initial
+            {...{
+              canFlyAway,
+              noButtonScale,
+              firstInStorage,
+              secondInStorage,
+              thirdInStorage,
+              openModal,
+              handleFlyAway,
+              setScreen,
+              prevStorageTask,
+              inputRef,
+              modalVisible,
+              screens,
+              screen,
+              oldVisitor,
+              isGreen,
+              contentBlurred,
+              getRandomPlaceholder,
+              task,
+              handleSaveTask,
+              handleTaskInputChange,
+              handleBlurContent,
+              // blurTransitionVisible,
+            }}
+          />
+        ) : (
+          <Final
+            {...{
+              handleEdit,
+              canFlyAway,
+              handleStartAllOver,
+              doneForToday,
+              progressWidth,
+              handleClearAll,
+              handleUndo,
+              undoButtonShown,
+              screens,
+              screen,
+              flyAwayIndex,
+              handleFlyAway,
+              setScreen,
+              openModal,
+              task,
+              noButtonScale,
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }

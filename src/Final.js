@@ -36,7 +36,7 @@ function Final({
                 : 'none',
           }}
         >
-          <p className='final-screen-task'>
+          <p onClick={handleEdit} className='final-screen-task'>
             {localStorage.getItem(`Task ${screens[screen - 3].id}`)}
           </p>
         </div>
@@ -53,7 +53,7 @@ function Final({
                   : 'none',
             }}
           >
-            <p className='final-screen-task'>
+            <p onClick={handleEdit} className='final-screen-task'>
               {localStorage.getItem(`Task ${screens[screen - 2].id}`)}
             </p>
           </div>
@@ -71,7 +71,7 @@ function Final({
                   : 'none',
             }}
           >
-            <p className='final-screen-task'>
+            <p onClick={handleEdit} className='final-screen-task'>
               {localStorage.getItem(`Task ${screens[screen - 1].id}`)}
             </p>
           </div>

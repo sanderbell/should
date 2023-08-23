@@ -1,9 +1,10 @@
 Desktop, iPad styles
-Sync blur unblur
-Characters limit
+Colors
 PWA
+
+
+Sync blur unblur
 Animation between all screens
 Animation with flying cards
-Colors
 Footer
 Swiping

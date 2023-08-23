@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Catamaran&display=swap');
 
-
-
-
-
-
-
 html {
   -webkit-appearance: none;
   appearance: auto;
@@ -35,11 +29,24 @@ body {
   margin: 0;
   padding: 0;
   user-select: none;
+  /* border: #b8aaaa 0.1px solid; */
 }
 
 #root {
+  height: 100vh;
+  width: 100vw;
+}
+
+#desktop-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  text-align: center;
   width: 100%;
+  justify-content: center;
+  background-size: 100vw 100vh;
+
 }
 
 .App {
@@ -51,18 +58,17 @@ body {
   width: 100%;
 }
 
+
+
 .initial-content {
   align-items: center;
   animation: fadein 0.4s linear 1;
-  background-position: center;
-  background-repeat: repeat;
-  background-size: 30vw 15vh;
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: space-evenly;
   text-align: center;
-  transition: all 0.5s;
+  transition: all 0.6s;
   width: 80%;
 }
 
@@ -76,7 +82,6 @@ h1 {
   font-size: calc(2.2rem + 5vmin);
   height: 2em;
   line-height: 1.1em;
-  /* text-transform: uppercase; */
 }
 
 .initial-input {
@@ -94,11 +99,11 @@ h1 {
   font-weight: 800;
   margin: 25px 30px;
   outline: none;
-  padding: 1.5em 2.4em;
+  padding: 1.5em 2.5em;
   text-align: center;
   text-overflow: ellipsis;
   text-transform: uppercase;
-  transition: all 0.5s ease;
+  transition: all 0.6s ease;
 }
 
 .initial-input:focus {
@@ -109,7 +114,7 @@ h1 {
 }
 
 .initial-input::placeholder {
-  opacity: 0.3;
+  opacity: 0.2;
 }
 
 .initial-input:focus::placeholder {
@@ -347,7 +352,19 @@ button:disabled:hover {
   font-weight: 800;
   max-width: 80%;
   text-transform: uppercase;
+  transition: transform 0.6s ease;
+
+
 }
+
+.final-screen-task:hover {
+  cursor: pointer;
+  opacity: 0.9;
+  border-bottom: 0.9px dotted;
+  transform: scale(1.05);
+
+}
+
 
 .fly-away {
   animation: flyAwayAnimation 2s ease 1;
@@ -457,27 +474,91 @@ footer a {
   }
 }
 
-@keyframes from-hell {
-  100% {
-    transform: translateY(0%);
-  }
-}
 
-@media screen and (orientation: landscape) {
-  h1 {
-    font-size: 10vmin;
-    margin-bottom: 0.6em;
-    max-height: 3em;
-    max-width: 90%;
+@media screen and (min-width: 700px) and (orientation: landscape) {
+
+  #root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .App {
+    width: 63%;
+    height: 93%;
+    max-width: 600px;
   }
 
   .initial-input {
-    font-size: 7vmin;
-    padding: 1.1em;
+    font-size: 2.6vmin;
+  }
+
+  .initial-input:focus {
+    transform: scale(1.5);
+  }
+
+  button {
+    max-width: 10vmin;
+  }
+
+  h1 {
+    font-family: 'Carter One', sans-serif;
+    font-size: 4.6rem;
+    height: 2.5em;
+    line-height: 1.2em;
+  }
+
+  #buttons-container {
+    align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+    width: 70%;
+    margin-bottom: 30px;
+  }
+
+  .final-screens {
+    width: 250px;
+    height: 250px;
   }
 
   .final-screen-task {
-    font-size: 6vmin;
-    padding: 1em;
+    font-size: 1.5rem;
+    font-weight: 800;
   }
+
+
+  .modal-content-wrapper {
+    width: 63%;
+    height: 93%;
+  }
+
+  .modal-heading {
+    font-family: 'Carter One', sans-serif;
+    font-size: 4.6rem;
+    height: 2.1em;
+    line-height: 1.2em;
+  }
+
+  .modal-text {
+    font-family: 'Catamaran', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.2em;
+    text-align: left;
+  }
+
+  .modal-span {
+    border: 1px solid #9d9d9d;
+    border-radius: 20%;
+    color: #818181;
+    font-size: 0.9rem;
+  }
+
+  .modal-btn {
+    animation: handshake 1s linear infinite alternate;
+    height: 10vmin;
+    margin: 0;
+    max-width: 10vmin;
+    padding: 0;
+  }
+
 }

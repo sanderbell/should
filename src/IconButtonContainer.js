@@ -84,7 +84,7 @@ function IconButtonContainer({
           style={
             screen === 6
               ? {
-                  transform: 'translateY(-160%) scale(3) rotate(360deg)',
+                  transform: 'translateY(-200%) scale(3.7) rotate(360deg)',
                   transition: 'transform 2s cubic-bezier(0.84, -0.7, 0.16, 1)',
                 }
               : null
