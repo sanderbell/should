@@ -258,7 +258,9 @@ function App() {
   };
 
   const handleClearAll = () => {
-    const userConfirmedRemove = window.confirm('🔪 Should we remove all tasks?');
+    const userConfirmedRemove = window.confirm(
+      '🔪 Should we remove all tasks?'
+    );
 
     if (userConfirmedRemove) {
       [
@@ -354,6 +356,27 @@ function App() {
   };
 
   console.log('screen is', screen);
+
+  const statusBarStyle = document.getElementById('status-bar');
+
+  if (statusBarStyle) {
+    statusBarStyle.setAttribute(
+      'content',
+      screen === 0
+        ? '#ffe8ea'
+        : screen === 1
+        ? '#fff5e8'
+        : screen === 2
+        ? '#e8fffe'
+        : screen === 3
+        ? '#f8f2f0'
+        : screen === 4
+        ? '#f2f1e9'
+        : screen === 5
+        ? '#d8f4f5'
+        : '#e7fce6'
+    );
+  }
 
   return (
     <div
