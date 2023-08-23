@@ -359,9 +359,9 @@ button:disabled:hover {
 
 .final-screen-task:hover {
   cursor: pointer;
-  opacity: 0.9;
+  opacity: 0.85;
   border-bottom: 0.9px dotted;
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
 
 }
 

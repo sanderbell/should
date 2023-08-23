@@ -93,9 +93,7 @@ function IconButtonContainer({
         >
           <img draggable='false' src={doneIcon} alt='Done!' />
         </button>
-      ) : (
-        'null'
-      )}
+      ) : null}
     </div>
   );
 }
