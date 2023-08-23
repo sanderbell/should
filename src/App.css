@@ -300,7 +300,7 @@ button:disabled:hover {
 }
 
 #final-screens-container {
-  align-items: start;
+  align-items: flex-start;
   align-items: center;
   display: flex;
   flex-direction: column;
