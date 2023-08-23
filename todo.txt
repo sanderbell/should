@@ -1,8 +1,8 @@
-
-
+Desktop, iPad styles
+Colors
 PWA
 
-Colors
+
 Sync blur unblur
 Animation between all screens
 Animation with flying cards

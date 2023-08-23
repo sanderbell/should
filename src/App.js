@@ -258,9 +258,9 @@ function App() {
   };
 
   const handleClearAll = () => {
-    const userConfirmedRemove = window.confirm('🔪 Should we remove all tasks?');
+    const userConfirmed = window.confirm('Should we remove all tasks?');
 
-    if (userConfirmedRemove) {
+    if (userConfirmed) {
       [
         'Task one',
         'Task two',
@@ -315,18 +315,13 @@ function App() {
   };
 
   const handleStartAllOver = () => {
-    const userConfirmedStart = window.confirm(
-      `😳 Wasn't it enough? Are you really OK to commit to more tasks today?`
-    );
-    if (userConfirmedStart) {
-      localStorage.removeItem('Done for today');
-      setScreen(0);
-      canUndoRef.current = false;
-      isNotIOS() &&
-        setTimeout(() => {
-          inputRef.current.focus();
-        }, 500);
-    }
+    localStorage.removeItem('Done for today');
+    setScreen(0);
+    canUndoRef.current = false;
+    isNotIOS() &&
+      setTimeout(() => {
+        inputRef.current.focus();
+      }, 500);
   };
 
   const startCountdown = () => {
