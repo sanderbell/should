@@ -121,26 +121,26 @@ function App() {
   const storageTask = localStorage.getItem(`Task ${screens[screen].id}`);
   const doneForToday = localStorage.getItem(`Done for today`);
 
-  const statusBarStyle = document.getElementById('status-bar');
+  // const statusBarStyle = document.getElementById('status-bar');
 
-  statusBarStyle.setAttribute(
-    'content',
-    screen === 0 && modalVisible
-      ? '#f0f0f0'
-      : screen === 0 && !modalVisible
-      ? '#ffe8ea'
-      : screen === 1
-      ? '#fff5e8'
-      : screen === 2
-      ? '#e8fffe'
-      : screen === 3
-      ? '#f8f2f0'
-      : screen === 4
-      ? '#f2f1e9'
-      : screen === 5
-      ? '#d8f4f5'
-      : '#e7fce6'
-  );
+  // statusBarStyle.setAttribute(
+  //   'content',
+  //   screen === 0 && modalVisible
+  //     ? '#f0f0f0'
+  //     : screen === 0 && !modalVisible
+  //     ? '#ffe8ea'
+  //     : screen === 1
+  //     ? '#fff5e8'
+  //     : screen === 2
+  //     ? '#e8fffe'
+  //     : screen === 3
+  //     ? '#f8f2f0'
+  //     : screen === 4
+  //     ? '#f2f1e9'
+  //     : screen === 5
+  //     ? '#d8f4f5'
+  //     : '#e7fce6'
+  // );
 
   const inputRef = useRef(null);
 
