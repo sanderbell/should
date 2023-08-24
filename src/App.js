@@ -339,7 +339,7 @@ function App() {
 
   const handleStartAllOver = () => {
     const userConfirmedStart = window.confirm(
-      `😳 Wasn't it enough? Are you really OK to commit to more tasks today?`
+      `😳 Wow! Do you really want more tasks today?`
     );
     if (userConfirmedStart) {
       localStorage.removeItem('Done for today');

@@ -1,15 +1,11 @@
 /* eslint-disable no-restricted-globals */
+
+const filesToCache = ['/', '/index.html', '/styles.css', '/script.js'];
+
 self.addEventListener('install', function (event) {
   event.waitUntil(
-    caches.open('your-cache-name').then(function (cache) {
-      return cache.addAll([
-        '/',
-        '/index.html',
-        '/styles.css',
-        '/script.js',
-        '/icon-192x192.png',
-        '/icon-512x512.png',
-      ]);
+    caches.open('my-name').then(function (cache) {
+      return cache.addAll(filesToCache);
     })
   );
 });
