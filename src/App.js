@@ -365,7 +365,7 @@ function App() {
       ? '#f0f0f0'
       : screen === 0 && !modalVisible
       ? '#ffe8ea'
-      : screen === 1
+      : screen === 1 
       ? '#fff5e8'
       : screen === 2
       ? '#e8fffe'
