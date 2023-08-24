@@ -359,24 +359,24 @@ function App() {
 
   const statusBarStyle = document.getElementById('status-bar');
 
-  if (statusBarStyle) {
-    statusBarStyle.setAttribute(
-      'content',
-      screen === 0
-        ? '#ffe8ea'
-        : screen === 1
-        ? '#fff5e8'
-        : screen === 2
-        ? '#e8fffe'
-        : screen === 3
-        ? '#f8f2f0'
-        : screen === 4
-        ? '#f2f1e9'
-        : screen === 5
-        ? '#d8f4f5'
-        : '#e7fce6'
-    );
-  }
+  statusBarStyle.setAttribute(
+    'content',
+    screen === 0 && modalVisible
+      ? '#f0f0f0'
+      : screen === 0 && !modalVisible
+      ? '#ffe8ea'
+      : screen === 1
+      ? '#fff5e8'
+      : screen === 2
+      ? '#e8fffe'
+      : screen === 3
+      ? '#f8f2f0'
+      : screen === 4
+      ? '#f2f1e9'
+      : screen === 5
+      ? '#d8f4f5'
+      : '#fff'
+  );
 
   return (
     <div
