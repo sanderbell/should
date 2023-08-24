@@ -1,9 +1,4 @@
-ultra small screens
 iPad
-
-
-Sync panel
-
 Colors
 Sync blur unblur
 Animation between all screens

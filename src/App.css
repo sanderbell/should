@@ -476,8 +476,7 @@ footer a {
   }
 }
 
-
-@media screen and (min-width: 700px) and (orientation: landscape) {
+@media screen and (min-width: 700px) {
 
   #root {
     display: flex;
