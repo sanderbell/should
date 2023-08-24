@@ -249,7 +249,7 @@ button:disabled:hover {
 
 .modal-text {
   font-family: 'Catamaran', sans-serif;
-  font-size: calc(1rem + 1.1dvw);
+  font-size: calc(1rem + 1dvw);
   font-weight: 400;
   line-height: 1.36em;
   text-align: left;
