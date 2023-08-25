@@ -195,6 +195,11 @@ function App() {
     localStorage.setItem('Is it on fire?', JSON.stringify(false));
     setBurntModalVisible(false);
     localStorage.setItem(`Timestamp`, [day, month, year]);
+    setScreen(0)
+    isNotIOS() &&
+      setTimeout(() => {
+        inputRef.current.focus();
+      }, 500);
   };
 
   const prevStorageTask =
