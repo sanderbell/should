@@ -161,16 +161,6 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   if (0 < screen < 3) {
-  //     setBlurTransitionVisible('yay!');
-
-  //     setTimeout(() => {
-  //       setBlurTransitionVisible(null);
-  //     }, 220);
-  //   }
-  // }, [screen]);
-
   function isNotIOS() {
     const userAgent = window.navigator.userAgent;
     return !(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream);

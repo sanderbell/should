@@ -5,10 +5,10 @@ ReadMe
 
 v2
 
+storage sync
 Colors
 Sync blur unblur
 Animation between all screens
 Animation with flying cards
 Footer
 Swiping
-ReadMe
