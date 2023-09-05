@@ -1,5 +1,7 @@
 # should: a minimalist to-do app (PWA)
 
+![User flow example](./demo.gif "User flow example")
+
 We believe in the power of just three daily tasks: the most important, a nice-to-do, and the least important. As the day ends, these tasks reset, ensuring a fresh start for each new day. Join us in simplifying productivity – with each task limited to 25 characters – and experience the magic of minimalist daily planning. **should:** works offline on every platform. You can actively engage with your tasks, and they are reset at midnight every day.
 
 ## Features
